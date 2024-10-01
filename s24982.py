@@ -1,4 +1,4 @@
-# train.py
+# s24982.py
 import numpy as np
 from sklearn.datasets import make_blobs
 from sklearn.model_selection import train_test_split
@@ -62,6 +62,9 @@ def train_model():
     accuracy = np.sum(y_test == y_pred) / len(y_test)
 
     # Zapis wyniku
+    with open("accuracy.txt", "w") as file:
+        file.write(f"Model trained with accuracy: {accuracy * 100:.2f}%")
+
     print(f"Model trained with accuracy: {accuracy * 100:.2f}%")
 
 
