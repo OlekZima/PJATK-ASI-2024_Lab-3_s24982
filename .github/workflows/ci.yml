@@ -1,6 +1,6 @@
 # .github/workflows/ci.yml
 
-name: CI/CD Pipeline for ML Model Training
+name: CI/CD Pipeline for preparing data
 
 # Wykonuj akcje przy każdym pushu do gałęzi main
 on:
@@ -17,13 +17,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: PJATK-ASI-2024/Lab2---Obr-bka-danych
+          path: main
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
             generator_danych.py
-          sparse-checkout-cone-mode: false
-          path: main
 
-      - name: Checkout my repo
-        uses: actions/checkout@v4
-        with:
-          repository: PJATK-ASI-2024/Lab-2_s24982
-          path: main
+#      - name: Checkout my repo
+#        uses: actions/checkout@v4
+#        with:
+#          path: main
