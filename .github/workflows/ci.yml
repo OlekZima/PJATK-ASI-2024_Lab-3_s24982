@@ -20,7 +20,7 @@ jobs:
           sparse-checkout: |
             generator_danych.py
           sparse-checkout-cone-mode: false
-          path: Lab2--Obr-bka-danych
+          path: main
 
       - name: Checkout my repo
         uses: actions/checkout@v4
