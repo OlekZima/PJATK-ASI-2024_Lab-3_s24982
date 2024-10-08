@@ -22,11 +22,12 @@ jobs:
           sparse-checkout: |
             generator_danych.py
 
+  setup-python-and-requirements:
+    runs-on: ubuntu-latest
+    steps:
       - name: Setup Python and requirements
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: pip install pandas, numpy, Faker
-
-      - name: Run Python script
       - run: python generator_danych.py 24982
