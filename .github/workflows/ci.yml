@@ -16,13 +16,17 @@ jobs:
       - name: Checkout source repo
         uses: actions/checkout@v4
         with:
-          repository: PJATK-ASI-2024/Lab2---Obr-bka-danych
-          path: main
+          repository: 'PJATK-ASI-2024/Lab2---Obr-bka-danych'
+          token: ${{ secrets.GPH_TOKEN }}
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             generator_danych.py
 
-#      - name: Checkout my repo
-#        uses: actions/checkout@v4
-#        with:
-#          path: main
+      - name: Setup Python and requirements
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pandas, numpy, Faker
+
+      - name: Run Python script
+      - run: python generator_danych.py
