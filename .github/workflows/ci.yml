@@ -28,4 +28,4 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install pandas numpy Faker
-      - run: python generator_danych.py 24982
+      - run: python generator_danych.py -s 24982
