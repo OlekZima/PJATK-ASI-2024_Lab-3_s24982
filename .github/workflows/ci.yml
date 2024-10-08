@@ -9,22 +9,21 @@ on:
       - main
 
 jobs:
-  train-model:
+  checkout-and-download-script:
     runs-on: ubuntu-latest
-    
+
     steps:
-      # Krok 1: Checkout repozytorium
-      - name: Checkout repo
+      - name: Checkout source repo
         uses: actions/checkout@v4
+        with:
+          repository: PJATK-ASI-2024/Lab2---Obr-bka-danych
+          sparse-checkout: |
+            generator_danych.py
+          sparse-checkout-cone-mode: false
+          path: Lab2--Obr-bka-danych
 
-      # Krok 2: Zainstaluj Python i zależności
-      - name: Install python and dependencies
-        run: pip install -r requirements.txt
-
-      # Krok 3: Uruchom trenowanie modelu
-      - name: Running script
-        run: python3 s24982.py
-
-      # Krok 4: Wyświetl wynik (accuracy)
-      - name: Display training result
-        run: cat accuracy.txt
+      - name: Checkout my repo
+        uses: actions/checkout@v4
+        with:
+          repository: PJATK-ASI-2024/Lab-2_s24982
+          path: main
