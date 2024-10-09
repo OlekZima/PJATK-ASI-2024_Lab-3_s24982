@@ -35,5 +35,5 @@ jobs:
           python-version: '3.12'
       - run: pip install -r main/requirements.txt
       - run: python task_repo/generator_danych.py -s 24982
-      - run: python main/get_spreadsheet_values.py -c ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }} -s ${{ secrets.SPREADSHEET_ID }}
+      - run: python main/get_spreadsheet_values.py --cred ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }} --spreadsheet ${{ secrets.SPREADSHEET_ID }}
 
