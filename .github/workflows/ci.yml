@@ -21,7 +21,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: main
-      - run: ls -lha
 
       - name: Checkout source repo
         uses: actions/checkout@v4
@@ -35,8 +34,6 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r main/requirements.txt
-
-      - run: ls -lha
       - run: python task_repo/generator_danych.py -s 24982
-      - run: python main/get_spreadsheet_values.py
+      - run: python main/get_spreadsheet_values.py -c ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }} -s ${{ SPREADSHEET_ID }}
 
