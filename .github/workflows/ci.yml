@@ -17,6 +17,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Lab-2 repo
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            requirements.txt
+            get_spreadsheet_values.py
+
+
       - name: Setup Python and requirements
         uses: actions/setup-python@v5
         with:
@@ -32,20 +41,8 @@ jobs:
           sparse-checkout: |
             generator_danych.py
 
-      - name: Checkout Lab-2 repo
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            requirements.txt
+
       - run: ls -lha
       - run: python generator_danych.py -s 24982
-
-      - name: Det data from Google Spreadsheet
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            get_spreadsheet_values.py
-          sparse-checkout-cone-mode: false
       - run: python get_spreadsheet_values.py
 
