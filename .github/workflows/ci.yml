@@ -2,7 +2,6 @@
 
 name: CI/CD Pipeline for preparing data
 
-# Wykonuj akcje przy każdym pushu do gałęzi main
 on:
   push:
     branches:
@@ -37,7 +36,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-        run: pip install -r main/requirements.txt
+      - run: pip install -r main/requirements.txt
 
       - name: Run Python scripts
         run: python task_repo/generator_danych.py -s 24982
