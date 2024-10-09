@@ -20,10 +20,10 @@ jobs:
       - name: Checkout Lab-2 repo
         uses: actions/checkout@v4
         with:
-          sparse-checkout-cone-mode: false
           sparse-checkout: |
             requirements.txt
             get_spreadsheet_values.py
+      - run: ls -lha
 
 
       - name: Setup Python and requirements
@@ -40,7 +40,6 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             generator_danych.py
-
 
       - run: ls -lha
       - run: python generator_danych.py -s 24982
