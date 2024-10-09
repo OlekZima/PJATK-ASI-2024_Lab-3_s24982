@@ -17,6 +17,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Setup Python and requirements
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+
       - name: Checkout source repo
         uses: actions/checkout@v4
         with:
@@ -32,21 +38,12 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             requirements.txt
-          path: '.'
-      - run: ls -lha
-
-      - name: Setup Python and requirements
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - run: pip install -r requirements.txt
       - run: ls -lha
       - run: python generator_danych.py -s 24982
 
       - name: Det data from Google Spreadsheet
         uses: actions/checkout@v4
         with:
-          path: '.'
           sparse-checkout: |
             get_spreadsheet_values.py
           sparse-checkout-cone-mode: false
