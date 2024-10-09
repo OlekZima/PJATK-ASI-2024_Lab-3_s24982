@@ -26,6 +26,12 @@ jobs:
           sparse-checkout: |
             generator_danych.py
 
+      - name: Checkout Lab-2 repo
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            requirements.txt
 
       - name: Setup Python and requirements
         uses: actions/setup-python@v5
