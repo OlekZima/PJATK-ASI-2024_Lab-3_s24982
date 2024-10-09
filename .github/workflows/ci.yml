@@ -38,6 +38,8 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r main/requirements.txt
+
+      - name: Run Python scripts
       - run: python task_repo/generator_danych.py -s 24982
-      - run: python main/get_spreadsheet_values.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID"
+          python main/get_spreadsheet_values.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID" --file ../task_repo/data_student_24982.csv
 
