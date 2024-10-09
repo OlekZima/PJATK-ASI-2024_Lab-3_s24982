@@ -14,6 +14,7 @@ class GoogleSheeter():
         credentials_data = json.loads(cred)
 
         self.credentials = service_account.Credentials.from_service_account_info(credentials_data, scopes=self.SCOPES)
+        self.spreadsheet_id = spreadsheet_id
         self.service = build('sheets', 'v4', credentials=self.credentials)
 
     @staticmethod
@@ -29,7 +30,8 @@ class GoogleSheeter():
             range = "Sheet1!A1"
             body = {"values": data}
 
-            result = sheet.values().append(range=range, valueInputOption="RAW", body=body).execute()
+            result = sheet.values().update(spreadsheetId=self.spreadsheet_id, range=range, valueInputOption="RAW",
+                                           body=body).execute()
 
             print(f"{result.get("updatedCells")} cells updated")
 
