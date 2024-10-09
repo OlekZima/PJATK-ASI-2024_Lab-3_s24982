@@ -14,6 +14,10 @@ on:
 
 jobs:
   checkout-and-download-script:
+    env:
+      GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
+      SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+
     runs-on: ubuntu-latest
 
     steps:
@@ -35,5 +39,5 @@ jobs:
           python-version: '3.12'
       - run: pip install -r main/requirements.txt
       - run: python task_repo/generator_danych.py -s 24982
-      - run: python main/get_spreadsheet_values.py --cred ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }} --spreadsheet ${{ secrets.SPREADSHEET_ID }}
+      - run: python main/get_spreadsheet_values.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID"
 
