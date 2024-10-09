@@ -17,31 +17,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Lab-2 repo
+      - name: Checkout
         uses: actions/checkout@v4
         with:
+          path: main
           sparse-checkout: |
             requirements.txt
             get_spreadsheet_values.py
       - run: ls -lha
 
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+        with:
+          repository: 'PJATK-ASI-2024/Lab2---Obr-bka-danych'
+          path: task_repo
+          token: ${{ secrets.GPH_TOKEN }}
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            generator_danych.py
+            
 
       - name: Setup Python and requirements
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install -r requirements.txt
-
-      - name: Checkout source repo
-        uses: actions/checkout@v4
-        with:
-          repository: 'PJATK-ASI-2024/Lab2---Obr-bka-danych'
-          token: ${{ secrets.GPH_TOKEN }}
-          sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            generator_danych.py
+      - run: pip install -r main/requirements.txt
 
       - run: ls -lha
-      - run: python generator_danych.py -s 24982
-      - run: python get_spreadsheet_values.py
+      - run: python task_repo/generator_danych.py -s 24982
+      - run: python main/get_spreadsheet_values.py
 
