@@ -1,41 +1,85 @@
+import csv
 import json
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-import os
 import argparse
 
 
-def main(cred, spreadsheet):
-    SCOPES: list[str] = ["https://www.googleapis.com/auth/spreadsheets"]
-    credentials_info = cred
-    if credentials_info is None:
-        raise ValueError("GOOGLE_SHEETS_CREDENTIALS environment variable not set")
+class GoogleSheeter():
+    def __init__(self, cred: str, spreadsheet_id: str):
+        self.SCOPES: list[str] = ["https://www.googleapis.com/auth/spreadsheets"]
+        if cred is None:
+            raise ValueError("GOOGLE_SHEETS_CREDENTIALS environment variable not set")
+        credentials_data = json.loads(cred)
 
-    credentials_data = json.loads(credentials_info)
-    credentials = service_account.Credentials.from_service_account_info(credentials_data, scopes=SCOPES)
+        self.credentials = service_account.Credentials.from_service_account_info(credentials_data, scopes=self.SCOPES)
+        self.service = build('sheets', 'v4', credentials=self.credentials)
 
-    try:
-        service = build("sheets", "v4", credentials=credentials)
-        sheet = service.spreadsheets()
+    @staticmethod
+    def read_csv(file_path: str) -> list:
+        with open(file_path, 'r') as f:
+            reader = csv.reader(f)
+            csv_data = list(reader)
+            return csv_data
 
-        result = sheet.values().get(spreadsheetId=spreadsheet, range="Sheet1!A1:C6").execute()
-        values = result.get("values", [])
+    def upload_csv_to_sheet(self, data) -> None:
+        try:
+            sheet = self.service.spreadsheets()
+            range = "Sheet1!A1"
+            body = {"values": data}
 
-        for row in values:
-            print(row)
+            result = sheet.values().append(range=range, valueInputOption="RAW", body=body).execute()
 
-    except HttpError as err:
-        print(f"An error occurred: {err}")
+            print(f"{result.get("updatedCells")} cells updated")
+
+        except HttpError as e:
+            print(e)
+
+    def read_data_from_sheet(self):
+        pass
 
 
-if __name__ == "__main__":
+# def main(cred, spreadsheet):
+#     credentials_info = cred
+#     if credentials_info is None:
+#         raise ValueError("GOOGLE_SHEETS_CREDENTIALS environment variable not set")
+#
+#     credentials_data = json.loads(credentials_info)
+#     credentials = service_account.Credentials.from_service_account_info(credentials_data, scopes=SCOPES)
+#
+#     try:
+#         service = build("sheets", "v4", credentials=credentials)
+#         sheet = service.spreadsheets()
+#
+#         result = sheet.values().get(spreadsheetId=spreadsheet, range="Sheet1!A1:C6").execute()
+#         values = result.get("values", [])
+#
+#         for row in values:
+#             print(row)
+#
+#     except HttpError as err:
+#         print(f"An error occurred: {err}")
+
+
+def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--cred", type=str, help="Google Credentials", required=True)
     parser.add_argument("-s", "--spreadsheet", type=str, help="Google Spreadsheet ID", required=True)
+    parser.add_argument("-f", "--file", type=str, help="CSV file", required=True)
     args = parser.parse_args()
 
-    cred = args.cred
-    spreadsheet = args.spreadsheet
+    return args.cred, args.spreadsheet, args.file
 
-    main(cred, spreadsheet)
+
+def main():
+    cred, spreadsheet, file = parse_args()
+
+    google_sheeter = GoogleSheeter(cred, spreadsheet)
+
+    data = google_sheeter.read_csv(file)
+    google_sheeter.upload_csv_to_sheet(data)
+
+
+if __name__ == "__main__":
+    main()
