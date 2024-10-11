@@ -42,7 +42,7 @@ class GoogleSheeter():
         try:
             sheet = self.service.spreadsheets()
             range_sheet = "Sheet1!A1:Z2001"
-            body = {"values": []}
+            body = {"values": [""]}
             result = sheet.values().update(spreadsheetId=self.spreadsheet_id, range=range_sheet,
                                            valueInputOption="RAW", body=body).execute()
             print(f"{result.get('updatedCells')} cells updated")
