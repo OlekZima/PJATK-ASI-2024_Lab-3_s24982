@@ -69,7 +69,7 @@ def main():
     data = google_sheeter.read_csv(file)
 
     google_sheeter.clear_sheet()
-    # google_sheeter.upload_csv_to_sheet(data)
+    google_sheeter.upload_csv_to_sheet(data)
 
 
 if __name__ == "__main__":
