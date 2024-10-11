@@ -41,10 +41,9 @@ class GoogleSheeter():
     def clear_sheet(self):
         try:
             sheet = self.service.spreadsheets()
-            range_sheet = "Sheet1!A1:Z2001"
-            body = {"values": [""]}
-            result = sheet.values().update(spreadsheetId=self.spreadsheet_id, range=range_sheet,
-                                           valueInputOption="RAW", body=body).execute()
+            range_sheet = "Sheet1!A1:Z"
+            body = {}
+            result = sheet.values().clear(spreadsheetId=self.spreadsheet_id, range=range_sheet, body=body).execute()
             print(f"{result.get('updatedCells')} cells updated")
         except HttpError as e:
             print(e)
@@ -71,8 +70,6 @@ def main():
 
     google_sheeter.clear_sheet()
     # google_sheeter.upload_csv_to_sheet(data)
-
-
 
 
 if __name__ == "__main__":
