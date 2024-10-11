@@ -12,7 +12,7 @@ on:
     types: [ edited, dismissed ]
 
 jobs:
-  checkout-and-download-script:
+  Lab-02:
     env:
       GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
       SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}

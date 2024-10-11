@@ -27,14 +27,25 @@ class GoogleSheeter():
     def upload_csv_to_sheet(self, data) -> None:
         try:
             sheet = self.service.spreadsheets()
-            range = "Sheet1!A1"
+            range_sheet = "Sheet1!A1"
             body = {"values": data}
 
-            result = sheet.values().update(spreadsheetId=self.spreadsheet_id, range=range, valueInputOption="RAW",
+            result = sheet.values().update(spreadsheetId=self.spreadsheet_id, range=range_sheet, valueInputOption="RAW",
                                            body=body).execute()
 
             print(f"{result.get("updatedCells")} cells updated")
 
+        except HttpError as e:
+            print(e)
+
+    def clear_sheet(self):
+        try:
+            sheet = self.service.spreadsheets()
+            range_sheet = "Sheet1!A1:Z2001"
+            body = {"values": []}
+            result = sheet.values().update(spreadsheetId=self.spreadsheet_id, range=range_sheet,
+                                           valueInputOption="RAW", body=body).execute()
+            print(f"{result.get('updatedCells')} cells updated")
         except HttpError as e:
             print(e)
 
@@ -56,9 +67,12 @@ def main():
     cred, spreadsheet, file = parse_args()
 
     google_sheeter = GoogleSheeter(cred, spreadsheet)
-
     data = google_sheeter.read_csv(file)
+
+    google_sheeter.clear_sheet()
     google_sheeter.upload_csv_to_sheet(data)
+
+
 
 
 if __name__ == "__main__":
