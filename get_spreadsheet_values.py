@@ -5,6 +5,8 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import argparse
 
+from data_preparations import DataPreparator
+
 
 class GoogleSheeter():
     def __init__(self, cred: str, spreadsheet_id: str):
@@ -48,9 +50,6 @@ class GoogleSheeter():
         except HttpError as e:
             print(e)
 
-    def read_data_from_sheet(self):
-        pass
-
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -71,6 +70,10 @@ def main():
     google_sheeter.clear_sheet()
     google_sheeter.upload_csv_to_sheet(data)
 
+    google_sheeter.clear_sheet()
+    data_preparator = DataPreparator("data_student_s24982.csv")
+    data_preparator.prepare_data()
+    google_sheeter.upload_csv_to_sheet("prepared.csv")
 
 if __name__ == "__main__":
     main()
