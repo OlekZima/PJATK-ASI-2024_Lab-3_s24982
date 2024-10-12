@@ -71,7 +71,7 @@ def main():
     google_sheeter.upload_csv_to_sheet(data)
 
     google_sheeter.clear_sheet()
-    data_preparator = DataPreparator("data_student_s24982.csv")
+    data_preparator = DataPreparator("data_student_24982.csv")
     data_preparator.prepare_data()
     google_sheeter.upload_csv_to_sheet("prepared.csv")
 
