@@ -119,9 +119,9 @@ class DataPreparator():
         after_fill = self.df.isnull().sum()
         changes = before_fill - after_fill
         logger.info("Finished filling missing categorical data")
-        logger.info(f"Filling count: {changes}")
+        logger.info(f"Filling count: {changes.sum()}")
 
-        print(f"Added {changes} due to filling missing categorical data")
+        print(f"Added {changes.sum()} due to filling missing categorical data")
         return changes.sum()
 
     def fill_missing_numerical_data(self) -> int:
@@ -134,9 +134,9 @@ class DataPreparator():
         changes = before_fill - after_fill
 
         logger.info("Finished filling missing numerical data")
-        logger.info(f"Filling count: {changes}")
+        logger.info(f"Filling count: {changes.sum()}")
 
-        print(f"Added {changes} due to filling missing numerical data")
+        print(f"Added {changes.sum()} due to filling missing numerical data")
         return changes.sum()
 
     def hot_encode(self) -> int:
