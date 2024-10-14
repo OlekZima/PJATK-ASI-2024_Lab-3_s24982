@@ -41,7 +41,6 @@ jobs:
       - name: Run Python scripts
         run: |
           python task_repo/generator_danych.py -s 24982
-          ls -lh
           python main/main.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID" --file "data_student_24982.csv"
 
       - name: Show raport
