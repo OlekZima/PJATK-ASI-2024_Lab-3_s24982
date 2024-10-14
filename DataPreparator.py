@@ -63,7 +63,7 @@ class DataPreparator():
 
     @staticmethod
     def calculate_travel_time_hours(row) -> tuple[str, float]:
-        logger.info(f"Calculating travel time hours for row {row}")
+        logger.info(f"Calculating travel time hours for row")
         time_start = row["Czas Początkowy Podróży"]
         time_end = row["Czas Końcowy Podróży"]
 
