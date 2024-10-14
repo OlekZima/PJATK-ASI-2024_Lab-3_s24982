@@ -50,21 +50,11 @@ jobs:
       - name: Show log
         run: cat log.txt
 
-      - name: Archive original data
-        uses: actions/upload-artifact@v4
-        with:
-          name: original-csv-data
-          path: data/data_student_24982.csv
-
-      - name: Archive prepared data
-        uses: actions/upload-artifact@v4
-        with:
-          name: prepared-csv-data
-          path: data/prepared.csv
-
-      - name: Archive log and raport
+      - name: Archive files
         uses: actions/upload-artifact@v4
         with:
           path: |
+            data_student_24982.csv
+            prepared.csv
             log.txt
             raport.txt
