@@ -44,3 +44,5 @@ jobs:
           ls -lh
           python main/main.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID" --file "data_student_24982.csv"
 
+      - name: Show raport
+        run: cat "raport.txt"
