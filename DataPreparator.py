@@ -140,9 +140,11 @@ class DataPreparator():
         assert self.df.isnull().sum().sum() == 0
 
         with open("raport.txt", "w") as f:
-            f.write(f"Total amount of changed cells: {changed_data_cells}")
-            f.write(f"Total amount of deleted rows: {deleted_rows}")
-            f.write(f"Total amount of added columns: {self.df.shape[1] - self.original_df.shape[1]}")
+            f.write(f"""
+            Total amount of changed cells: {changed_data_cells}
+            Total amount of deleted rows: {deleted_rows}
+            Total amount of added columns: {self.df.shape[1] - self.original_df.shape[1]}
+            """)
 
 
 def main():
