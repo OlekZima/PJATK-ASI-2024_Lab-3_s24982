@@ -39,6 +39,7 @@ class GoogleSheeter():
 
         except HttpError as e:
             print(e)
+            raise e
 
     def clear_sheet(self):
         try:
@@ -49,6 +50,8 @@ class GoogleSheeter():
             print(f"{result.get('updatedCells')} cells updated")
         except HttpError as e:
             print(e)
+            raise e
+
 
 
 def parse_args():
@@ -74,6 +77,8 @@ def main():
     data_preparator = DataPreparator("data_student_24982.csv")
     data_preparator.prepare_data()
     data_prepared = google_sheeter.read_csv("prepared.csv")
+
+
     google_sheeter.upload_csv_to_sheet(data_prepared)
 
 

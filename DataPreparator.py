@@ -137,6 +137,8 @@ class DataPreparator():
 
         self.df.to_csv("prepared.csv", index=False)
 
+        assert self.df.isnull().sum().sum() == 0
+
         print(f"Total amount of changed cells: {changed_data_cells}")
         print(f"Total amount of deleted rows: {deleted_rows}")
         print(f"Total amount of added columns: {self.df.shape[1] - self.original_df.shape[1]}")
