@@ -182,6 +182,8 @@ class DataPreparator():
             changed_data_cells = self.validate_time()
 
             time_data = self.df.apply(DataPreparator.calculate_travel_time_hours, axis="columns", result_type="expand")
+
+            logger.info("Added 'Całkowity Czas Podróży' column")
             self.df["Całkowity Czas Podróży"] = time_data[0]
             self.df["Total Hours"] = time_data[1]
 
