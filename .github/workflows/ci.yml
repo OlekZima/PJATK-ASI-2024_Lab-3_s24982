@@ -43,8 +43,28 @@ jobs:
           python task_repo/generator_danych.py -s 24982
           python main/main.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID" --file "data_student_24982.csv"
 
+
       - name: Show raport
         run: cat raport.txt
 
       - name: Show log
         run: cat log.txt
+
+      - name: Archive original data
+        uses: actions/upload-artifact@v4
+        with:
+          name: original-csv-data
+          path: data/data_student_24982.csv
+
+      - name: Archive prepared data
+        uses: actions/upload-artifact@v4
+        with:
+          name: prepared-csv-data
+          path: data/prepared.csv
+
+      - name: Archive log and raport
+        uses: actions/upload-artifact@v4
+        with:
+          path: |
+            log.txt
+            raport.txt
