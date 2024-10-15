@@ -1,21 +1,24 @@
-# Laboratoirum 2 [ASI]
+# Laboratoirum 3 [ASI]
 
-## Obróbka danych
+[Dane](https://vincentarelbundock.github.io/Rdatasets/csv/AER/CollegeDistance.csv)
 
-### Opis:
+Proszę o wykorzystanie już zdobytej wiedzy i zautomatyzowanie procesów w GitHub Action.
 
-Repozytorium pobiera skrypt generujący dane w postaci CSV i wczytuje je do Google Spreadsheet poprzez Google Spreadsheet API.
-W tym samym czasie dane są przetwarzane przez klasę `DataPreparator` i zapisywane w pliku `prepared.csv`, który zostaje w artefaktach.
-Następnie przetworzone dane są wczytywane do w.w. Google Spreadsheet.
+Lab3-Analizator_wynikow
+Zadanie 1: Budowa modelu predykcyjnego (20 punktów) Cel: Na podstawie dostarczonego datasetu studenci mają za zadanie zbudować model predykcyjny, który będzie przewidywał zmienną score. Powinni wybrać odpowiedni algorytm, przeprowadzić analizę danych i ocenić jakość modelu. Do całej pracy ma zostać stworzona dokumentacja, może być w formie Readme.pdf i tam zamieszczone wykresy, albo można użyć bardziej profesjonalnego oprogramowania do tworzenia dokumentacji IT.
 
-### Generowanie danych:
+Etapy: Eksploracja i wstępna analiza danych (5 punktów)
 
-Dane są pobierane z [tego](https://github.com/PJATK-ASI-2024/Lab2---Obr-bka-danych) repozytorium.
+Wczytanie i zapoznanie się z danymi. Sprawdzenie brakujących wartości oraz ich odpowiednia obsługa (np. imputacja lub usunięcie). Analiza statystyczna zmiennych. Ocena: 5 punktów za pełną eksplorację danych, w tym wykresy i opisy zmiennych.
 
-### Google Spreadsheet API:
+Inżynieria cech i przygotowanie danych (5 punktów)
 
-Połączenie odbywa się za pomocą konta serwisowego, którego JSON znaduje się w sekrecie repozytorium.
+Przeprowadzenie odpowiedniej inżynierii cech (np. kategoryzacja, standaryzacja, normalizacja, tworzenie nowych zmiennych, jeśli konieczne). Podział danych na zbiór treningowy i testowy. Ocena: 5 punktów za poprawne przygotowanie danych, z wyjaśnieniem wszystkich kroków.
 
-### Przetworzenie danych:
+Wybór i trenowanie modelu (5 punktów)
 
-Dane są przetwarzane za pomocą biblioteki `pandas`
+Wybór odpowiedniego algorytmu (np. regresja liniowa, lasy losowe, regresja logistyczna, sieci neuronowe itp.). Wytrenowanie modelu na zbiorze treningowym. Wyjaśnienie, dlaczego wybrano dany model. Ocena: 5 punktów za wybór odpowiedniego modelu i poprawne przeszkolenie modelu.
+
+Ocena i optymalizacja modelu (5 punktów)
+
+Ocena jakości modelu na zbiorze testowym (np. przy użyciu metryk takich jak R², MAE, MSE). Jeśli wyniki nie są satysfakcjonujące, należy przeprowadzić optymalizację (np. tunowanie hiperparametrów, walidacja krzyżowa). Ocena: 5 punktów za ocenę modelu i ewentualną optymalizację.)
