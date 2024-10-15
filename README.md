@@ -4,7 +4,8 @@
 
 Proszę o wykorzystanie już zdobytej wiedzy i zautomatyzowanie procesów w GitHub Action.
 
-Lab3-Analizator_wynikow
+## Lab3-Analizator_wynikow
+
 Zadanie 1: Budowa modelu predykcyjnego (20 punktów) Cel: Na podstawie dostarczonego datasetu studenci mają za zadanie zbudować model predykcyjny, który będzie przewidywał zmienną score. Powinni wybrać odpowiedni algorytm, przeprowadzić analizę danych i ocenić jakość modelu. Do całej pracy ma zostać stworzona dokumentacja, może być w formie Readme.pdf i tam zamieszczone wykresy, albo można użyć bardziej profesjonalnego oprogramowania do tworzenia dokumentacji IT.
 
 Etapy: Eksploracja i wstępna analiza danych (5 punktów)
