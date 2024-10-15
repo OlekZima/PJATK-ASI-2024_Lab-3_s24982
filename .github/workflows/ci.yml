@@ -13,9 +13,9 @@ on:
 
 jobs:
   Lab-02:
-    env:
-      GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
-      SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+#    env:
+#      GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
+#      SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
 
     runs-on: ubuntu-latest
 
@@ -32,29 +32,29 @@ jobs:
           path: task_repo
           token: ${{ secrets.GPH_TOKEN }}
 
-      - name: Setup Python and requirements
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - run: pip install -r main/requirements.txt
-
-      - name: Run Python scripts
-        run: |
-          python task_repo/generator_danych.py -s 24982
-          python main/main.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID" --file "data_student_24982.csv"
-
-
-      - name: Show raport
-        run: cat raport.txt
-
-      - name: Show log
-        run: cat log.txt
-
-      - name: Archive files
-        uses: actions/upload-artifact@v4
-        with:
-          path: |
-            data_student_24982.csv
-            prepared.csv
-            log.txt
-            raport.txt
+#      - name: Setup Python and requirements
+#        uses: actions/setup-python@v5
+#        with:
+#          python-version: '3.12'
+#      - run: pip install -r main/requirements.txt
+#
+#      - name: Run Python scripts
+#        run: |
+#          python task_repo/generator_danych.py -s 24982
+#          python main/main.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID" --file "data_student_24982.csv"
+#
+#
+#      - name: Show raport
+#        run: cat raport.txt
+#
+#      - name: Show log
+#        run: cat log.txt
+#
+#      - name: Archive files
+#        uses: actions/upload-artifact@v4
+#        with:
+#          path: |
+#            data_student_24982.csv
+#            prepared.csv
+#            log.txt
+#            raport.txt
