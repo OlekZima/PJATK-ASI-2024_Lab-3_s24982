@@ -97,16 +97,17 @@ class GoogleSheeter:
             columns = columns_result.get('values', [])[0]
 
             data_result = sheet.values().get(spreadsheetId=self.spreadsheet_id,
-                                        range=f"Sheet{sheet_number}!A2:G1001").execute()
+                                             range=f"Sheet{sheet_number}!A2:G1001").execute()
             logger.info(f"Result of getting data from spreadsheet: {data_result}")
 
             spread_sheet_data = data_result.get('values', [])
             logger.info(f"Accessed data from result: {spread_sheet_data}")
 
             data_df = pd.DataFrame(spread_sheet_data, columns=columns)
-            data_df["Wiek"] = data_df["Wiek"].apply(lambda x: float(x) if pd.notna(x) and x != "" else x).apply(lambda x: int(x) if pd.notna(x) and x != "" else x)
-            data_df["Średnie Zarobki"] = data_df["Średnie Zarobki"].apply(lambda x: float(x) if pd.notna(x) and x != "" else x)
-            data_df.convert_dtypes()
+            data_df[["Wiek", "Średnie Zarobki"]] = data_df[["Wiek", "Średnie Zarobki"]].apply(pd.to_numeric)
+            # data_df["Średnie Zarobki"] = data_df["Średnie Zarobki"].apply(
+            #     lambda x: float(x) if pd.notna(x) and x != "" else x)
+
             print(data_df.dtypes)
 
             logger.info(f"Accessed data as DataFrame: {data_df}")
