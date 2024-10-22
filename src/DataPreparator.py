@@ -19,8 +19,8 @@ class DataPreparator:
     def clean_data(self) -> int:
         logger.info("Starting to clean data from empty values")
         initial_count = len(self.df)
-        self.df.dropna(inplace=True, subset=["Czas Początkowy Podróży", "Czas Końcowy Podróży"], how='any')
-        self.df.dropna(inplace=True, thresh=4)
+        self.df.dropna(inplace=True, subset=["Czas Początkowy Podróży", "Czas Końcowy Podróży"], how='any', axis="rows")
+        self.df.dropna(inplace=True, thresh=4, axis="rows")
         self.df.reset_index(inplace=True, drop=True)
 
         deleted_rows = initial_count - len(self.df)
