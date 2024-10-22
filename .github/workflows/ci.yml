@@ -52,9 +52,13 @@ jobs:
         if: github.event_name == 'push'
         run: cat raport.txt
 
-      - name: Show log
+      - name: Show log from get prepare upload script
         if: github.event_name == 'push'
         run: cat log_get_prepare_upload.txt
+
+      - name: Show log from generate upload script
+        if: github.event_name == 'workflow_dispatch'
+        run: cat log_generate_upload.txt
 
       - name: Archive files from uploading
         if: github.event_name == 'workflow_dispatch'
