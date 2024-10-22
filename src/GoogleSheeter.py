@@ -1,5 +1,6 @@
 import argparse
 import json
+import csv
 import logging
 
 import pandas as pd
@@ -51,12 +52,11 @@ class GoogleSheeter:
             raise e
 
     @staticmethod
-    def read_csv(file_path: str) -> pd.DataFrame:
+    def read_csv(file_path: str):
         logger.info("Trying to read CSV file")
         try:
-            data_df = pd.read_csv(file_path)
-            logger.info("CSV file has been read successfully")
-            return data_df
+            with open(file_path, "r") as csv_file:
+                return csv_file.read()
         except Exception as e:
             logger.critical("Failed to read CSV file")
             logger.critical(e)
