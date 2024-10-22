@@ -104,7 +104,7 @@ class GoogleSheeter:
             logger.info(f"Accessed data from result: {spread_sheet_data}")
 
             data_df = pd.DataFrame(spread_sheet_data, columns=columns)
-            data_df["Wiek"] = data_df["Wiek"].astype(int)
+            data_df["Wiek"] = data_df["Wiek"].astype(float).astype(int)
             data_df["Średnie Zarobki"] = data_df["Średnie Zarobki"].astype(float)
 
             logger.info(f"Accessed data as DataFrame: {data_df}")
