@@ -1,14 +1,8 @@
-# .github/workflows/ci.yml
-
-name: CI/CD Pipeline for preparing data and uploading it
-
-on:
-  push:
-    branches:
-      - feat/fancy-workflow
+name: generate_upload.yml
+on: workflow_dispatch
 
 jobs:
-  Lab-02:
+  Generate_Upload_data:
     env:
       GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
       SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
@@ -31,20 +25,17 @@ jobs:
       - name: Setup Python requirements
         run: pip install -r main/requirements.txt
 
-      - name: Prepare data and upload
-        run: python main/get_prepare_upload.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID"
+      - name: Generate data and upload
+        run: |
+          python task_repo/generator_danych.py -s 24982
+          python main/generate_upload.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID" --file "data_student_24982.csv"
 
-      - name: Show raport
-        run: cat raport.txt
+      - name: Show log from generate upload script
+        run: cat log_generate_upload.txt
 
-      - name: Show log from get prepare upload script
-        run: cat log_get_prepare_upload.txt
-
-      - name: Archive files from preparing data
+      - name: Archive files from uploading
         uses: actions/upload-artifact@v4
         with:
           path: |
-            prepared.csv
-            raport.txt
-            log_get_prepare_upload.txt
-
+            data_student_24982.csv
+            log_generate_upload.txt
