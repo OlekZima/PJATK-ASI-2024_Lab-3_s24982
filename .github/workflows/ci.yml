@@ -1,14 +1,12 @@
 # .github/workflows/ci.yml
 
-name: CI/CD Pipeline for preparing data
+name: CI/CD Workflows for preparing data
 
 on:
   push:
     branches:
       - feat/fancy-workflow
   workflow_dispatch:
-
-
 
 jobs:
   Lab-02:
