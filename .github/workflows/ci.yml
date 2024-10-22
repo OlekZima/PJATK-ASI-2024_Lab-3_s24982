@@ -35,11 +35,8 @@ jobs:
           path: task_repo
           token: ${{ secrets.GPH_TOKEN }}
 
-      - name: Setup Python and requirements
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - run: pip install -r main/requirements.txt
+      - name: Setup Python requirements
+        run: pip install -r main/requirements.txt
 
       - name: Generate data and upload
         if: ${{ github.event_name == 'workflow_dispatch' }}
