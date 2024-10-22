@@ -98,7 +98,10 @@ class GoogleSheeter:
             spread_sheet_data = result.get('values', [])
             logger.info(f"Accessed data from result: {spread_sheet_data}")
 
-
+            for i, row in enumerate(spread_sheet_data):
+                if i > 5:
+                    break
+                print(row)
 
             data_df = pd.DataFrame(spread_sheet_data, columns=columns)
             logger.info(f"Accessed data as DataFrame: {data_df}")
