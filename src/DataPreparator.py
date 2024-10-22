@@ -24,6 +24,7 @@ class DataPreparator:
         self.df.reset_index(inplace=True, drop=True)
 
         print(self.df.isnull().sum())
+        print(self.df.shape)
 
         deleted_rows = initial_count - len(self.df)
         logger.info("Finished cleaning data from empty values")
