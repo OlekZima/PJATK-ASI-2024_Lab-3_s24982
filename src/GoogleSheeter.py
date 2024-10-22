@@ -1,17 +1,17 @@
-import csv
+import argparse
 import json
+import logging
+
+import pandas as pd
+from google.auth.exceptions import MutualTLSChannelError
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-import argparse
-import logging
-from google.auth.exceptions import MutualTLSChannelError
-from DataPreparator import DataPreparator
 
 logger = logging.getLogger(__name__)
 
 
-class GoogleSheeter():
+class GoogleSheeter:
     def __init__(self, cred: str, spreadsheet_id: str):
         self.SCOPES: list[str] = ["https://www.googleapis.com/auth/spreadsheets"]
         logger.info("Trying to find Google API Credentials")
@@ -51,14 +51,12 @@ class GoogleSheeter():
             raise e
 
     @staticmethod
-    def read_csv(file_path: str) -> list:
+    def read_csv(file_path: str) -> pd.DataFrame:
         logger.info("Trying to read CSV file")
         try:
-            with open(file_path, 'r') as f:
-                reader = csv.reader(f)
-                csv_data = list(reader)
-                logger.info("CSV file has been read.")
-                return csv_data
+            data_df = pd.read_csv(file_path)
+            logger.info("CSV file has been read successfully")
+            return data_df
         except Exception as e:
             logger.critical("Failed to read CSV file")
             logger.critical(e)
@@ -75,7 +73,7 @@ class GoogleSheeter():
                                            body=body).execute()
 
             logger.info("CSV file has been uploaded")
-            logger.info(f"{result.get('deleted')} cells deleted while uploading")
+            logger.info(f"{result.get('updatedCells')} cells updated while uploading")
         except HttpError as e:
             logger.critical("Failed to upload CSV to the Google Spreadsheet")
             logger.critical(e)
@@ -85,13 +83,37 @@ class GoogleSheeter():
             logger.critical(e)
             raise e
 
+    def read_sheet_to_csv(self, sheet_number: int) -> pd.DataFrame:
+        logger.info("Trying to download data from Google Spreadsheet API")
+        try:
+            sheet = self.service.spreadsheets()
+            result = sheet.values().get(spreadsheetId=self.spreadsheet_id, range=f"Sheet{sheet_number}!A1").execute()
+            logger.info(f"Result of getting data from spreadsheet: {result}")
+
+            spread_sheet_data = result.get('values', [])
+            logger.info(f"Accessed data from result: {spread_sheet_data}")
+
+            data_df = pd.DataFrame(spread_sheet_data)
+            logger.info(f"Accessed data as DataFrame: {data_df}")
+            return data_df
+
+        except HttpError as e:
+            logger.critical("Failed to download data from Google Spreadsheet")
+            logger.critical(e)
+            raise e
+        except Exception as e:
+            logger.critical("Failed to download data from Google Spreadsheet")
+            logger.critical(e)
+            raise e
+
     def clear_sheet(self, sheet_number: int) -> None:
         logger.info("Trying to clear Google Spreadsheet")
         try:
             sheet = self.service.spreadsheets()
-            result = sheet.values().clear(spreadsheetId=self.spreadsheet_id, range=f"Sheet{sheet_number}!A1:Z", body={}).execute()
+            result = sheet.values().clear(spreadsheetId=self.spreadsheet_id, range=f"Sheet{sheet_number}!A1:Z",
+                                          body={}).execute()
             logger.info("Google Spreadsheet has been cleared")
-            logger.info(f"{result.get('deleted')} cells deleted while clearing")
+            logger.info(f"Cleared range: {result.get('clearedRange')}")
 
         except HttpError as e:
             logger.critical("Failed to clear Google Spreadsheet")
@@ -103,50 +125,3 @@ class GoogleSheeter():
             raise e
 
 
-def parse_args():
-    logger.info("Trying to parse arguments.")
-    try:
-        parser = argparse.ArgumentParser()
-        parser.add_argument("-c", "--cred", type=str, help="Google Credentials", required=True)
-        parser.add_argument("-s", "--spreadsheet", type=str, help="Google Spreadsheet ID", required=True)
-        parser.add_argument("-f", "--file", type=str, help="CSV file", required=True)
-        args = parser.parse_args()
-
-        logger.info("Arguments have been parsed.")
-        return args.cred, args.spreadsheet, args.file
-
-    except argparse.ArgumentError as arg_error:
-        logger.critical("Argument error exception. Failed to parse arguments.")
-        raise arg_error
-    except argparse.ArgumentTypeError as type_error:
-        logger.critical("Type error exception. Failed to parse arguments.")
-        raise type_error
-    except Exception as e:
-        logger.critical("Failed to parse arguments. Exception has been raised.")
-        logger.critical(e)
-        raise e
-
-
-def main():
-    logging.basicConfig(filename="log.txt", encoding="utf-8", level=logging.INFO)
-    logger.info("Starting the script")
-
-    cred, spreadsheet, file = parse_args()
-
-    google_sheeter = GoogleSheeter(cred, spreadsheet)
-    data = google_sheeter.read_csv(file)
-
-    google_sheeter.clear_sheet(1)
-    google_sheeter.upload_csv_to_sheet(data, 1)
-
-    google_sheeter.clear_sheet(2)
-    data_preparator = DataPreparator("data_student_24982.csv")
-    data_preparator.prepare_data()
-    data_prepared = google_sheeter.read_csv("prepared.csv")
-    google_sheeter.upload_csv_to_sheet(data_prepared, 2)
-
-    logger.info("End of the script")
-
-
-if __name__ == "__main__":
-    main()

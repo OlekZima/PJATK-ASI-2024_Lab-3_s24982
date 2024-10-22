@@ -7,11 +7,11 @@ logger = logging.getLogger(__name__)
 
 
 class DataPreparator():
-    def __init__(self, csv_file_path: str):
+    def __init__(self, data_df: pd.DataFrame):
         logging.basicConfig(filename="log.txt", encoding="utf-8", level=logging.INFO)
 
         logger.info("Starting script to prepare data")
-        self.original_df = pd.read_csv(csv_file_path)
+        self.original_df = data_df
 
         logger.info("Created copy of the original dataframe")
         self.df = self.original_df.copy()
@@ -215,12 +215,3 @@ class DataPreparator():
             logger.critical("An exception occurred")
             logger.critical(e)
             raise e
-
-
-def main():
-    data_preparator = DataPreparator("test_data.csv")
-    data_preparator.prepare_data()
-
-
-if __name__ == "__main__":
-    main()
