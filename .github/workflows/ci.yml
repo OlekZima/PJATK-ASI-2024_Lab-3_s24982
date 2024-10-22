@@ -6,10 +6,12 @@ on:
   push:
     branches:
       - Lab-2
+  workflow_dispatch:
   pull_request:
     types: [ opened, reopened,  assigned, synchronize ]
   pull_request_review:
     types: [ edited, dismissed ]
+
 
 jobs:
   Lab-02:
@@ -21,6 +23,7 @@ jobs:
 
     steps:
       - name: Checkout
+        if: ${{ github.event_name == workflow_dispatch }}
         uses: actions/checkout@v4
         with:
           path: main
@@ -38,23 +41,31 @@ jobs:
           python-version: '3.12'
       - run: pip install -r main/requirements.txt
 
-      - name: Run Python scripts
+      - name: Generate data and upload
+        if: ${{ github.event_name == workflow_dispatch }}
         run: |
           python task_repo/generator_danych.py -s 24982
-          python main/main.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID" --file "data_student_24982.csv"
+          python main/generate_upload.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID" --file "data_student_24982.csv"
 
+      - name: Prepare data and upload
+        if: ${{ github.event_name == push }}
+        run: |
+          python main/get_prepare_upload.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID"
 
       - name: Show raport
+        if: ${{ github.event_name == push }}
         run: cat raport.txt
 
       - name: Show log
+        if: ${{ github.event_name == push }}
         run: cat log.txt
 
       - name: Archive files
+        if: ${{ github.event_name == push }}
         uses: actions/upload-artifact@v4
         with:
           path: |
-            data_student_24982.csv
+#            data_student_24982.csv
             prepared.csv
             log.txt
             raport.txt
