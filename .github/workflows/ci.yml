@@ -7,11 +7,6 @@ on:
     branches:
       - feat/fancy-workflow
   workflow_dispatch:
-  pull_request:
-    types: [ opened, reopened,  assigned, synchronize ]
-  pull_request_review:
-    types: [ edited, dismissed ]
-
 
 jobs:
   Lab-02:
