@@ -46,8 +46,7 @@ jobs:
 
       - name: Prepare data and upload
         if: ${{ github.event_name == 'push' }}
-        run: |
-          python main/get_prepare_upload.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID"
+        run: python main/get_prepare_upload.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID"
 
       - name: Show raport
         if: ${{ github.event_name == 'push' }}
