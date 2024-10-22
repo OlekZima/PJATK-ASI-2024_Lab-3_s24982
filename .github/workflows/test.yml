@@ -1,0 +1,10 @@
+name: test.yml
+on:
+  workflow_dispatch:
+
+jobs:
+  Test:
+    runs-on: self-hosted
+    steps:
+      - name: test
+        run: echo "aaaaa"
