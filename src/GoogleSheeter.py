@@ -104,8 +104,8 @@ class GoogleSheeter:
             logger.info(f"Accessed data from result: {spread_sheet_data}")
 
             data_df = pd.DataFrame(spread_sheet_data, columns=columns)
-            data_df["Wiek"] = data_df["Wiek"].astype(float).astype(int)
-            data_df["Średnie Zarobki"] = data_df["Średnie Zarobki"].astype(float)
+            data_df["Wiek"] = data_df["Wiek"].apply(lambda x: float(x) if pd.notna(x) and x != "" else x).apply(lambda x: int(x) if pd.notna(x) and x != "" else x).
+            data_df["Średnie Zarobki"] = data_df["Średnie Zarobki"].apply(lambda x: float(x) if pd.notna(x) and x != "" else x)
 
             logger.info(f"Accessed data as DataFrame: {data_df}")
             return data_df
