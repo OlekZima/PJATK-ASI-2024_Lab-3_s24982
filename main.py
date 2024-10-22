@@ -64,13 +64,14 @@ class GoogleSheeter():
             logger.critical(e)
             raise e
 
-    def upload_csv_to_sheet(self, data) -> None:
+    def upload_csv_to_sheet(self, data, sheet_number: int) -> None:
         logger.info("Trying to upload CSV file to Google Spreadsheet API")
         try:
             sheet = self.service.spreadsheets()
             body = {"values": data}
 
-            result = sheet.values().update(spreadsheetId=self.spreadsheet_id, range="Sheet1!A1", valueInputOption="RAW",
+            result = sheet.values().update(spreadsheetId=self.spreadsheet_id, range=f"Sheet{sheet_number}!A1",
+                                           valueInputOption="RAW",
                                            body=body).execute()
 
             logger.info("CSV file has been uploaded")
@@ -84,11 +85,11 @@ class GoogleSheeter():
             logger.critical(e)
             raise e
 
-    def clear_sheet(self):
+    def clear_sheet(self, sheet_number: int) -> None:
         logger.info("Trying to clear Google Spreadsheet")
         try:
             sheet = self.service.spreadsheets()
-            result = sheet.values().clear(spreadsheetId=self.spreadsheet_id, range="Sheet1!A1:Z", body={}).execute()
+            result = sheet.values().clear(spreadsheetId=self.spreadsheet_id, range=f"Sheet{sheet_number}!A1:Z", body={}).execute()
             logger.info("Google Spreadsheet has been cleared")
             logger.info(f"{result.get('deleted')} cells deleted while clearing")
 
@@ -135,14 +136,14 @@ def main():
     google_sheeter = GoogleSheeter(cred, spreadsheet)
     data = google_sheeter.read_csv(file)
 
-    google_sheeter.clear_sheet()
-    google_sheeter.upload_csv_to_sheet(data)
+    google_sheeter.clear_sheet(1)
+    google_sheeter.upload_csv_to_sheet(data, 1)
 
-    google_sheeter.clear_sheet()
+    google_sheeter.clear_sheet(2)
     data_preparator = DataPreparator("data_student_24982.csv")
     data_preparator.prepare_data()
     data_prepared = google_sheeter.read_csv("prepared.csv")
-    google_sheeter.upload_csv_to_sheet(data_prepared)
+    google_sheeter.upload_csv_to_sheet(data_prepared, 2)
 
     logger.info("End of the script")
 

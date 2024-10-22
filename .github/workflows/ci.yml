@@ -5,7 +5,7 @@ name: CI/CD Pipeline for preparing data
 on:
   push:
     branches:
-      - main
+      - Lab-2
   pull_request:
     types: [ opened, reopened,  assigned, synchronize ]
   pull_request_review:
@@ -17,7 +17,7 @@ jobs:
       GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
       SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout
