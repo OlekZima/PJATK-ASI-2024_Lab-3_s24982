@@ -102,6 +102,9 @@ class DataPreparator:
     def fix_invalid_time(time_str: str, changes_count):
         logger.info(f"Trying to fix invalid time string {time_str}")
 
+        if time_str == "":
+            logger.warning("Time is empty!")
+            return "00:00"
 
         try:
             time_datetime = datetime.datetime.strptime(time_str, "%H:%M").time().strftime("%H:%M")
