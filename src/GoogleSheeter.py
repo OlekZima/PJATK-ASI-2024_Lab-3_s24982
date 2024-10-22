@@ -86,19 +86,21 @@ class GoogleSheeter:
             logger.critical(e)
             raise e
 
-    def read_sheet_to_csv(self, sheet_number: int) -> pd.DataFrame:
+    def read_sheet_to_dataframe(self, sheet_number: int) -> pd.DataFrame:
         logger.info("Trying to download data from Google Spreadsheet API")
         try:
             sheet = self.service.spreadsheets()
 
-            columns_result =sheet.values().get(spreadsheetId=self.spreadsheet_id, range=f"Sheet{sheet_number}!A1:O1").execute()
+            columns_result = sheet.values().get(spreadsheetId=self.spreadsheet_id,
+                                                range=f"Sheet{sheet_number}!A1:O1").execute()
             logger.info(f"Result of getting data columns from spreadsheet: {columns_result}")
             columns = columns_result.get('values', [])[0]
 
-            result = sheet.values().get(spreadsheetId=self.spreadsheet_id, range=f"Sheet{sheet_number}!A2:G1001").execute()
-            logger.info(f"Result of getting data from spreadsheet: {result}")
+            data_result = sheet.values().get(spreadsheetId=self.spreadsheet_id,
+                                        range=f"Sheet{sheet_number}!A2:G1001").execute()
+            logger.info(f"Result of getting data from spreadsheet: {data_result}")
 
-            spread_sheet_data = result.get('values', [])
+            spread_sheet_data = data_result.get('values', [])
             logger.info(f"Accessed data from result: {spread_sheet_data}")
 
             data_df = pd.DataFrame(spread_sheet_data, columns=columns)
@@ -132,5 +134,3 @@ class GoogleSheeter:
             logger.critical("Failed to clear Google Spreadsheet. Exception has been raised.")
             logger.critical(e)
             raise e
-
-

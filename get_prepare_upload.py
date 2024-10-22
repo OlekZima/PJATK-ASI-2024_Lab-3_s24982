@@ -36,7 +36,7 @@ def main():
     cred, spreadsheet = parse_args()
 
     google_sheeter = GoogleSheeter(cred, spreadsheet)
-    data = google_sheeter.read_sheet_to_csv(1)  # 1 is first (1) Sheet in Spreadsheet with raw data
+    data = google_sheeter.read_sheet_to_dataframe(1)  # 1 is first (1) Sheet in Spreadsheet with raw data
 
     google_sheeter.clear_sheet(2)  # 2 is the second (2) Sheet in Spreadsheet with prepared data
     data_preparator = DataPreparator(data)
