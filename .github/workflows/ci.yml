@@ -70,3 +70,4 @@ jobs:
             prepared.csv
             raport.txt
             log_get_prepare_upload.txt
+            test.csv

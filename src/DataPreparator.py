@@ -49,6 +49,8 @@ class DataPreparator:
         self.df["is_valid_start_time"] = self.df["Czas Początkowy Podróży"].apply(DataPreparator.is_time_valid)
         self.df["is_valid_end_time"] = self.df["Czas Końcowy Podróży"].apply(DataPreparator.is_time_valid)
 
+        self.df.to_csv("test.csv", index=False)
+
         self.df.loc[self.df["is_valid_start_time"] == False, "Czas Początkowy Podróży"] = self.df.loc[
             self.df["is_valid_start_time"] == False, "Czas Początkowy Podróży"].apply(
             lambda x: DataPreparator.fix_invalid_time(x, changes_count))
@@ -97,6 +99,11 @@ class DataPreparator:
     @staticmethod
     def fix_invalid_time(time_str: str, changes_count):
         logger.info(f"Trying to fix invalid time string {time_str}")
+
+        if not time_str:
+            logger.warning(f"Time string {time_str} is empty")
+            return "00:00"
+
         try:
             time_datetime = datetime.datetime.strptime(time_str, "%H:%M").time().strftime("%H:%M")
             logger.info(f"Time string {time_str} is valid")
@@ -106,7 +113,7 @@ class DataPreparator:
             hour, minute = map(int, time_str.split(":"))
             if hour >= 24:
                 hour -= 24
-                changes_count[0] += 1  # Increment the counter when a change is made
+                changes_count[0] += 1
             time = datetime.datetime.strptime(f"{hour}:{minute}", "%H:%M").time().strftime("%H:%M")
             logger.info(f"Time string is fixed")
             return time
