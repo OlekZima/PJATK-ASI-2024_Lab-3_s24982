@@ -55,7 +55,7 @@ jobs:
 
       - name: Show log
         if: ${{ github.event_name == 'push' }}
-        run: cat log.txt
+        run: cat log_get_prepare_upload.txt
 
       - name: Archive files from uploading
         if: ${{ github.event_name == 'workflow_dispatch' }}
