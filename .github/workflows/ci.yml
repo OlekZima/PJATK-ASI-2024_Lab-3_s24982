@@ -5,7 +5,6 @@ name: CI/CD Pipeline for preparing data
 on:
   push:
     branches:
-      - Lab-2
       - feat/fancy-workflow
   workflow_dispatch:
   pull_request:
