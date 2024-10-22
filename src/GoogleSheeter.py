@@ -91,12 +91,12 @@ class GoogleSheeter:
             columns_result =sheet.values().get(spreadsheetId=self.spreadsheet_id, range=f"Sheet{sheet_number}!A1:O1").execute()
             logger.info(f"Result of getting data columns from spreadsheet: {columns_result}")
             columns = columns_result.get('values', [])[0]
-            print(f"columns: {columns}")
 
-            result = sheet.values().get(spreadsheetId=self.spreadsheet_id, range=f"Sheet{sheet_number}!A2").execute()
+            result = sheet.values().get(spreadsheetId=self.spreadsheet_id, range=f"Sheet{sheet_number}!A1").execute()
             logger.info(f"Result of getting data from spreadsheet: {result}")
 
             spread_sheet_data = result.get('values', [])
+            print(spread_sheet_data)
             logger.info(f"Accessed data from result: {spread_sheet_data}")
 
             for row in spread_sheet_data:
