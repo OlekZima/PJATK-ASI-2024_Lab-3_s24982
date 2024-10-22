@@ -105,10 +105,11 @@ class GoogleSheeter:
 
             data_df = pd.DataFrame(spread_sheet_data, columns=columns)
             data_df[["Wiek", "Średnie Zarobki"]] = data_df[["Wiek", "Średnie Zarobki"]].apply(pd.to_numeric)
-            # data_df["Średnie Zarobki"] = data_df["Średnie Zarobki"].apply(
-            #     lambda x: float(x) if pd.notna(x) and x != "" else x)
+
 
             print(data_df.dtypes)
+            print(data_df.isna().sum())
+            print(data_df.head())
 
             logger.info(f"Accessed data as DataFrame: {data_df}")
             return data_df
