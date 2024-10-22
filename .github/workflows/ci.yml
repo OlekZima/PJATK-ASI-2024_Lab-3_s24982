@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout
-        if: ${{ github.event_name == 'workflow_dispatch' }}
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/checkout@v4
         with:
           path: main
@@ -39,25 +39,25 @@ jobs:
         run: pip install -r main/requirements.txt
 
       - name: Generate data and upload
-        if: ${{ github.event_name == 'workflow_dispatch' }}
+        if: github.event_name == 'workflow_dispatch'
         run: |
           python task_repo/generator_danych.py -s 24982
           python main/generate_upload.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID" --file "data_student_24982.csv"
 
       - name: Prepare data and upload
-        if: ${{ github.event_name == 'push' }}
+        if: github.event_name == 'push'
         run: python main/get_prepare_upload.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID"
 
       - name: Show raport
-        if: ${{ github.event_name == 'push' }}
+        if: github.event_name == 'push'
         run: cat raport.txt
 
       - name: Show log
-        if: ${{ github.event_name == 'push' }}
+        if: github.event_name == 'push'
         run: cat log_get_prepare_upload.txt
 
       - name: Archive files from uploading
-        if: ${{ github.event_name == 'workflow_dispatch' }}
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
           path: |
@@ -65,7 +65,7 @@ jobs:
             log_generate_upload.txt
 
       - name: Archive files from preparing data
-        if: ${{ github.event_name == 'push' }}
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           path: |
