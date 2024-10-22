@@ -95,7 +95,7 @@ class GoogleSheeter:
             logger.info(f"Result of getting data columns from spreadsheet: {columns_result}")
             columns = columns_result.get('values', [])[0]
 
-            result = sheet.values().get(spreadsheetId=self.spreadsheet_id, range=f"Sheet{sheet_number}!A2:G1000").execute()
+            result = sheet.values().get(spreadsheetId=self.spreadsheet_id, range=f"Sheet{sheet_number}!A2:G1001").execute()
             logger.info(f"Result of getting data from spreadsheet: {result}")
 
             spread_sheet_data = result.get('values', [])
