@@ -1,11 +1,14 @@
 # .github/workflows/ci.yml
 
-name: CI/CD Pipeline for preparing data and uploading it
+name: CI/CD Pipeline for preparing data
 
 on:
   push:
     branches:
       - feat/fancy-workflow
+  workflow_dispatch:
+
+
 
 jobs:
   Lab-02:
@@ -31,16 +34,38 @@ jobs:
       - name: Setup Python requirements
         run: pip install -r main/requirements.txt
 
+      - name: Generate data and upload
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          python task_repo/generator_danych.py -s 24982
+          python main/generate_upload.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID" --file "data_student_24982.csv"
+
       - name: Prepare data and upload
+        if: github.event_name == 'push'
         run: python main/get_prepare_upload.py --cred "$GOOGLE_SHEETS_CREDENTIALS" --spreadsheet "$SPREADSHEET_ID"
 
       - name: Show raport
+        if: github.event_name == 'push'
         run: cat raport.txt
 
       - name: Show log from get prepare upload script
+        if: github.event_name == 'push'
         run: cat log_get_prepare_upload.txt
 
+      - name: Show log from generate upload script
+        if: github.event_name == 'workflow_dispatch'
+        run: cat log_generate_upload.txt
+
+      - name: Archive files from uploading
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          path: |
+            data_student_24982.csv
+            log_generate_upload.txt
+
       - name: Archive files from preparing data
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           path: |
