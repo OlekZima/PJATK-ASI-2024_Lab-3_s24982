@@ -105,7 +105,7 @@ class GoogleSheeter:
 
             data_df = pd.DataFrame(spread_sheet_data, columns=columns)
             data_df[["Wiek", "Średnie Zarobki"]] = data_df[["Wiek", "Średnie Zarobki"]].apply(pd.to_numeric)
-            data_df["Wiek"] = data_df["Wiek"].astype(int)
+            data_df["Wiek"] = data_df["Wiek"].apply(lambda x: int(x) if pd.notna(x) else x)
 
             print(data_df.dtypes)
             print(data_df.isna().sum())
