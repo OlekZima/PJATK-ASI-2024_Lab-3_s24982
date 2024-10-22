@@ -103,6 +103,7 @@ class GoogleSheeter:
                 print(row)
 
             data_df = pd.DataFrame(spread_sheet_data, columns=columns)
+            print(data_df.head())
             logger.info(f"Accessed data as DataFrame: {data_df}")
             return data_df
 
