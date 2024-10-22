@@ -31,7 +31,7 @@ def parse_args() -> tuple[str, str, str]:
 
 
 def main() -> None:
-    logging.basicConfig(filename="log.txt", encoding="utf-8", level=logging.INFO)
+    logging.basicConfig(filename="log_generate_upload.txt", encoding="utf-8", level=logging.INFO)
     logger.info("Starting the script to upload data to Google Spreadsheet")
 
     cred, spreadsheet, file = parse_args()

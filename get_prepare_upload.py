@@ -30,7 +30,7 @@ def parse_args() -> tuple[str, str]:
 
 
 def main():
-    logging.basicConfig(filename="log.txt", encoding="utf-8", level=logging.INFO)
+    logging.basicConfig(filename="log_get_prepare_upload.txt", encoding="utf-8", level=logging.INFO)
     logger.info("Starting the script")
 
     cred, spreadsheet = parse_args()
