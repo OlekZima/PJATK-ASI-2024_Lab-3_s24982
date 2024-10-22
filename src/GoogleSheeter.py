@@ -56,7 +56,10 @@ class GoogleSheeter:
         logger.info("Trying to read CSV file")
         try:
             with open(file_path, "r") as csv_file:
-                return csv_file.read()
+                reader = csv.reader(csv_file)
+                csv_data = list(reader)
+                logger.info("CSV file has been read")
+                return csv_data
         except Exception as e:
             logger.critical("Failed to read CSV file")
             logger.critical(e)
