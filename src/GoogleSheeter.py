@@ -107,6 +107,7 @@ class GoogleSheeter:
             data_df["Wiek"] = data_df["Wiek"].apply(lambda x: float(x) if pd.notna(x) and x != "" else x).apply(lambda x: int(x) if pd.notna(x) and x != "" else x)
             data_df["Średnie Zarobki"] = data_df["Średnie Zarobki"].apply(lambda x: float(x) if pd.notna(x) and x != "" else x)
             data_df.convert_dtypes()
+            print(data_df.dtypes)
 
             logger.info(f"Accessed data as DataFrame: {data_df}")
             return data_df
