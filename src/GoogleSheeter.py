@@ -99,11 +99,7 @@ class GoogleSheeter:
             logger.info(f"Result of getting data from spreadsheet: {result}")
 
             spread_sheet_data = result.get('values', [])
-            print(spread_sheet_data)
             logger.info(f"Accessed data from result: {spread_sheet_data}")
-
-            for row in spread_sheet_data:
-                print(row)
 
             data_df = pd.DataFrame(spread_sheet_data, columns=columns)
             print(data_df.head())

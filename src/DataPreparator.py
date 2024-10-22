@@ -6,7 +6,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class DataPreparator():
+class DataPreparator:
     def __init__(self, data_df: pd.DataFrame):
         logging.basicConfig(filename="log.txt", encoding="utf-8", level=logging.INFO)
 
