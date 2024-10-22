@@ -158,7 +158,7 @@ class DataPreparator:
         education_one_hot = pd.get_dummies(self.df["Wykształcenie"], prefix="Wykształcenie", prefix_sep="_")
         travel_target_one_hot = pd.get_dummies(self.df["Cel Podróży"], prefix="Cel Podróży", prefix_sep="_")
 
-        self.df.drop(columns=["Płeć","Płeć_", "Wykształcenie","Wykształcenie_", "Cel Podróży", "Cel Podróży_"], inplace=True)
+        self.df.drop(columns=["Płeć", "Wykształcenie", "Cel Podróży"], inplace=True)
         self.df = self.df.join([gender_one_hot, education_one_hot, travel_target_one_hot])
 
         new_shape = self.df.shape
@@ -203,6 +203,12 @@ class DataPreparator:
             changed_data_cells += self.fill_missing_numerical_data()
             changed_data_cells += self.standardize_data()
             changed_data_cells += self.hot_encode()
+
+            bad_columns = ["Płeć_", "Wykształcenie_"]
+            for column in bad_columns:
+                if column in self.df.columns:
+                    self.df.drop(column, axis="columns", inplace=True)
+
 
             self.df.to_csv("prepared.csv", index=False)
 
