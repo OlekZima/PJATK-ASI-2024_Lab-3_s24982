@@ -1,22 +1,41 @@
 # .github/workflows/ci.yml
 
-name: CI/CD Pipeline for preparing data
+name: CI/CD Pipeline for creating model
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    types: [ opened, reopened,  assigned, synchronize ]
-  pull_request_review:
-    types: [ edited, dismissed ]
+      - feat/*
+  workflow_dispatch:
 
 jobs:
   Lab-03:
     runs-on: self-hosted
 
+    permissions:
+      contents: write
+
     steps:
-      - name: Checkout
+      - name: Checkout the repo
         uses: actions/checkout@v4
-        with:
-          path: main
+
+      - name: Set up Python env
+        shell: zsh -l {0}
+        run: |
+          source ~/miniconda3/etc/profile.d/conda.sh
+          conda init
+          conda activate ASI_env
+          
+          
+          
+
+      - name: Deploy to GitHub Pages
+        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+        env:
+          CONFIG_FILE: documentation/mkdocs.yml
+          GITHUB_TOKEN: ${{ secrets.GPH_TOKEN }}
+
+
+
+
