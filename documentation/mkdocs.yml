@@ -1,0 +1,13 @@
+site_name: College Distance Exploration
+theme:
+  name: "readthedocs"
+nav:
+  - Home: index.md
+  - Data Explore: data_explore.md
+  - Data Analysis: data_analysis.md
+  - Model Training: model_training.md
+
+markdown_extensions:
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true

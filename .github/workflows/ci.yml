@@ -1,22 +1,44 @@
 # .github/workflows/ci.yml
 
-name: CI/CD Pipeline for preparing data
+name: CI/CD Pipeline for creating model
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    types: [ opened, reopened,  assigned, synchronize ]
-  pull_request_review:
-    types: [ edited, dismissed ]
+      - feat/*
+  workflow_dispatch:
 
 jobs:
   Lab-03:
     runs-on: self-hosted
 
+    permissions:
+      contents: write
+
     steps:
-      - name: Checkout
+      - name: Checkout the repo
         uses: actions/checkout@v4
         with:
-          path: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Install requirements
+        run: |
+          pip install -r requirements2.txt
+          which python
+          python --version
+            
+
+      - name: Deploy to GitHub Pages
+        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+        env:
+          CONFIG_FILE: documentation/mkdocs.yml
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.15/x64/bin/python
+
+
