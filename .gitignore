@@ -5,6 +5,7 @@ prepared.csv
 # Lab-3
 CollegeDistance.csv
 envoirment.yml
+docker-compose-selfhosted-runner.yml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
