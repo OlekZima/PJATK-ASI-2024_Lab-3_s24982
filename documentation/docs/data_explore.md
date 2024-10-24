@@ -123,26 +123,23 @@ Dataset contains no empty or `null` cells.
 
 ### Distributions of the features
 
-Plot with distribution of distances
+Plot with distribution of `distances` feature
 ![Plot with distribution of distances](img/Distribution_of_distance.png)
 
-Plot with distribution of education
+Plot with distribution of `education` feature
 ![Plot with distribution of education](img/Distribution_of_education.png)
 
-Plot with distribution of score
+Plot with distribution of `score` feature
 ![Plot with distribution of score](img/Distribution_of_score.png)
 
-Plot with distribution of tuition
+Plot with distribution of `tuition` feature
 ![Plot with distribution of tuition](img/Distribution_of_tuition.png)
 
-Plot with distribution of unemployment
+Plot with distribution of `unemp` feature
 ![Plot with distribution of unemployment](img/Distribution_of_unemp.png)
 
-Plot with distribution of wage
+Plot with distribution of `wage` feature
 ![Plot with distribution of wage](img/Distribution_of_wage.png)
-
-!!! note
-    The `rownames` feature is missing because it only represents index of the row. Therefore, it is safe to drop this feature in this project.
 
 ### Box plots of the features
 
@@ -164,3 +161,5 @@ Box plot of the `unemp` feature
 Box plot of the `wage` feature
 ![Box plot of the wage feature](img/Boxplot_of_wage.png)
 
+!!! note
+    Statistics of the `rownames` feature is missing because it only represents index of the row. Therefore, it is safe to drop this feature in this project.
