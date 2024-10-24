@@ -95,6 +95,51 @@ Features explained:
 | 4        | male   | afam      | 40.400001525878906 | no       | no       | yes  | yes   | 6.199999809265137 | 8.09000015258789 | 0.20000000298023224 | 0.8891500234603882 | 12        | low    | other  |
 | 5        | female | other     | 40.47999954223633  | no       | no       | no   | yes   | 5.599999904632568 | 8.09000015258789 | 0.4000000059604645  | 0.8891500234603882 | 13        | low    | other  |
 
-```python
+### Amount of empty cells:
+
+``` py linenums="1"
 data_df.isnull().sum()
 ```
+Code output:
+``` markdown
+rownames     0
+gender       0
+ethnicity    0
+score        0
+fcollege     0
+mcollege     0
+home         0
+urban        0
+unemp        0
+wage         0
+distance     0
+tuition      0
+education    0
+income       0
+region       0
+```
+
+Dataset contains no empty or `null` cells.
+
+### Distributions of the features
+
+Plot with distribution of distances
+![Plot with distribution of distances](img/Distribution_of_distance.png)
+
+Plot with distribution of education
+![Plot with distribution of education](img/Distribution_of_education.png)
+
+Plot with distribution of score
+![Plot with distribution of score](img/Distribution_of_score.png)
+
+Plot with distribution of tuition
+![Plot with distribution of tuition](img/Distribution_of_tuition.png)
+
+Plot with distribution of unemployment
+![Plot with distribution of unemployment](img/Distribution_of_unemp.png)
+
+Plot with distribution of wage
+![Plot with distribution of wage](img/Distribution_of_wage.png)
+
+!!! note
+    The `rownames` feature is missing because it's only represent index of the row. Therefore, it is save to drop this feature in this project.

@@ -1,6 +1,9 @@
 site_name: College Distance Exploration
 theme:
   name: "readthedocs"
+  icon:
+    admonition:
+      note: material/alert-circle
 nav:
   - Home: index.md
   - Data Explore: data_explore.md
@@ -12,3 +15,10 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - tables
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences

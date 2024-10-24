@@ -37,6 +37,7 @@ for col in numerical_cols:
     plt.title(f'Distribution of {col}')
     plt.xlabel(col)
     plt.ylabel('Frequency')
+    plt.savefig(f"documentation/docs/img/Distribution_of_{col}.png", bbox_inches='tight')
     plt.show()
 
 
