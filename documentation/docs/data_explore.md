@@ -43,32 +43,58 @@ A data frame containing 4739 observations based on 14 variables (15 including `r
 Features explained:
 
 + `gender`: factor indicating gender.
+    * Type: categorical
     * Possible values: `female` or `male`.
 + `ethnicity`: factor indicating ethnicity.
+    * Type: categorical
     * Possible values: `afam` (African-American), `hispanic` or `other`.
 + `score`: base year composite test score. These are achievement tests given to high school seniors in the sample.
+    * Type: `float`
     * Possible values: non-negative floating point number.
 + `fcollege`: factor. Is the father a college graduate?
+    * Type: categorical
     * Possible values: `yes` or `no`.
 + `mcollege`: factor. Is the mother a college graduate?
+    * Type: categorical
     * Possible values: `yes` or `no`.
 + `home`: factor. Does the family own their home?
+    * Type: categorical
     * Possible values: `yes` or `no`.
 + `urban`: factor. Is the school in an urban area?
+    * Type: categorical
     * Possible values: `yes` or `no`.
 + `unemp`: county unemployment rate in 1980.
+    * Type: `float`
     * Possible values: non-negative floating point number.
 + `wage`: state hourly wage in manufacturing in 1980.
+    * Type: `float`
     * Possible values: non-negative floating point number.
 + `distance`: distance from 4-year college (in 10 miles).
+    * Type: `float`
     * Possible values: non-negative floating point number.
 + `tuition`: average state 4-year college tuition (in 1000 USD).
+    * Type: float
     * Possible values: non-negative floating point number.
 + `education`: number of years of education.
+    * Type: `int`
     * Possible values: non-negative integer.
 + `income`: factor. Is the family income above USD 25,000 per year?
+    * Type: categorical
     * Possible values: `low` or `high`.
 + `region`: factor indicating region.
+    * Type: categorical
     * Possible values: `west` or `other`.
 
+## First look at the data
 
+| rownames | gender | ethnicity | score              | fcollege | mcollege | home | urban | unemp             | wage             | distance            | tuition            | education | income | region |
+|----------|--------|-----------|--------------------|----------|----------|------|-------|-------------------|------------------|---------------------|--------------------|-----------|--------|--------|
+| 1        | male   | other     | 39.150001525878906 | yes      | no       | yes  | yes   | 6.199999809265137 | 8.09000015258789 | 0.20000000298023224 | 0.8891500234603882 | 12        | high   | other  |
+| 2        | female | other     | 48.869998931884766 | no       | no       | yes  | yes   | 6.199999809265137 | 8.09000015258789 | 0.20000000298023224 | 0.8891500234603882 | 12        | low    | other  |
+| 3        | male   | other     | 48.7400016784668   | no       | no       | yes  | yes   | 6.199999809265137 | 8.09000015258789 | 0.20000000298023224 | 0.8891500234603882 | 12        | low    | other  |
+| 4        | male   | afam      | 40.400001525878906 | no       | no       | yes  | yes   | 6.199999809265137 | 8.09000015258789 | 0.20000000298023224 | 0.8891500234603882 | 12        | low    | other  |
+| 5        | female | other     | 40.47999954223633  | no       | no       | no   | yes   | 5.599999904632568 | 8.09000015258789 | 0.4000000059604645  | 0.8891500234603882 | 13        | low    | other  |
+
+```python
+data_df.isnull().sum()
+```
