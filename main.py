@@ -47,6 +47,7 @@ for col in numerical_cols:
     sns.boxplot(x=data_df[col])
     plt.title(f'Box Plot of {col}')
     plt.xlabel(col)
+    plt.savefig(f"documentation/docs/img/Boxplot_of_{col}.png", bbox_inches='tight')
     plt.show()
 
 
@@ -57,6 +58,7 @@ for col in categorical_cols:
     plt.title(f'Count Plot of {col}')
     plt.xlabel('Count')
     plt.ylabel(col)
+    plt.savefig(f"documentation/docs/img/Countplot_of_{col}.png", bbox_inches='tight')
     plt.show()
 
 plt.figure(figsize=(10, 8))

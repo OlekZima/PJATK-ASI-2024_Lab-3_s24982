@@ -142,4 +142,25 @@ Plot with distribution of wage
 ![Plot with distribution of wage](img/Distribution_of_wage.png)
 
 !!! note
-    The `rownames` feature is missing because it's only represent index of the row. Therefore, it is safe to drop this feature in this project.
+    The `rownames` feature is missing because it only represents index of the row. Therefore, it is safe to drop this feature in this project.
+
+### Box plots of the features
+
+Box plot of the `distance` feature
+![Box plot of the distance feature](img/Boxplot_of_distance.png)
+
+Box plot of the `education` feature
+![Box plot of the education feature](img/Boxplot_of_education.png)
+
+Box plot of the `score` feature
+![Box plot of the score feature](img/Boxplot_of_score.png)
+
+Box plot of the `tuition` feature
+![Box plot of the tuition feature](img/Boxplot_of_tuition.png)
+
+Box plot of the `unemp` feature
+![Box plot of the unemp feature](img/Boxplot_of_unemp.png)
+
+Box plot of the `wage` feature
+![Box plot of the wage feature](img/Boxplot_of_wage.png)
+
