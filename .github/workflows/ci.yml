@@ -29,7 +29,7 @@ jobs:
 
       - name: Install requirements
         run: |
-          pip install -r requirements.txt
+          pip install -r dependencies.txt
           which python
           python --version
             
@@ -40,6 +40,5 @@ jobs:
           CONFIG_FILE: documentation/mkdocs.yml
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.15/x64/bin/python
-          REQUIREMENTS: '2137.txt'
 
 
