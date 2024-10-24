@@ -142,4 +142,4 @@ Plot with distribution of wage
 ![Plot with distribution of wage](img/Distribution_of_wage.png)
 
 !!! note
-    The `rownames` feature is missing because it's only represent index of the row. Therefore, it is save to drop this feature in this project.
+    The `rownames` feature is missing because it's only represent index of the row. Therefore, it is safe to drop this feature in this project.
