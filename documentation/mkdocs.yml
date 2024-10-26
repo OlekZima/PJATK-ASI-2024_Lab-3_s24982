@@ -7,6 +7,7 @@ theme:
 nav:
   - Home: index.md
   - Data Explore: data_explore.md
+  - Feature Engineering: feature_engineering.md
   - Data Analysis: data_analysis.md
   - Model Training: model_training.md
 

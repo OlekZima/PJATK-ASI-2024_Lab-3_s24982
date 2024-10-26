@@ -1,4 +1,4 @@
-import pycaret
+from pycaret.regression import *
 import pandas as pd
 import seaborn as sns
 import numpy as np
@@ -14,11 +14,6 @@ print(data_df.describe(include="all"))
 
 print(f"The dataset contains {data_df.shape[0]} rows and {data_df.shape[1]} columns.")
 
-
-print(data_df.isnull().sum())
-sns.heatmap(data_df.isnull(), cbar=False)
-plt.title("Heatmap of Missing Values")
-plt.show()
 
 numerical_cols = data_df.select_dtypes(include=["float64", "int64"]).columns
 print(numerical_cols)
@@ -38,7 +33,6 @@ for col in numerical_cols:
     plt.xlabel(col)
     plt.ylabel("Frequency")
     plt.savefig(f"documentation/docs/img/Distribution_of_{col}.png", bbox_inches="tight")
-    plt.show()
 
 
 
@@ -48,7 +42,6 @@ for col in numerical_cols:
     plt.title(f"Box Plot of {col}")
     plt.xlabel(col)
     plt.savefig(f"documentation/docs/img/Boxplot_of_{col}.png", bbox_inches="tight")
-    plt.show()
 
 
 
@@ -59,7 +52,9 @@ for col in categorical_cols:
     plt.xlabel("Count")
     plt.ylabel(col)
     plt.savefig(f"documentation/docs/img/Countplot_of_{col}.png", bbox_inches="tight")
-    plt.show()
+
+
+#
 
 plt.figure(figsize=(10, 8))
 corr = data_df.corr()
