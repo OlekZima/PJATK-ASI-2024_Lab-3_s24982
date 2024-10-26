@@ -6,7 +6,7 @@
 
 Categorical features was coded as:
 
-!!! example
+!!! example "Changes"
 
     === "gender"
 
