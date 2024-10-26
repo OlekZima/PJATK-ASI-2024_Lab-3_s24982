@@ -12,14 +12,16 @@ nav:
   - Model Training: model_training.md
 
 markdown_extensions:
-  - def_list
   - pymdownx.tasklist:
       custom_checkbox: true
-  - tables
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - def_list
+  - tables
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
