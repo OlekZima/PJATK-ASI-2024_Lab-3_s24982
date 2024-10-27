@@ -34,7 +34,7 @@ jobs:
           python --version
 
       - name: Run python script
-        run: python main.py
+        run: python main.py --plots
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -55,5 +55,6 @@ jobs:
       - name: Debug
         run: |
           cd documentation/docs
-          echo "plugins:\n\t- with-pdf:\n\t\toutput_path: report.pdf" >> mkdocs.yml
+          echo -e "plugins:\n  - with-pdf:\n      output_path: report.pdf" >> mkdocs.yml
           mkdocs build
+          ls -lha
