@@ -32,7 +32,6 @@ jobs:
           pip install -r dependencies.txt
           which python
           python --version
-          ls -lha
 
       - name: Run python script
         run: python main.py
@@ -52,3 +51,6 @@ jobs:
           CONFIG_FILE: documentation/mkdocs.yml
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.15/x64/bin/python
+
+      - name: Debug
+        run: ls -lha
