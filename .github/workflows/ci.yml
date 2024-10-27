@@ -49,6 +49,8 @@ jobs:
           cd documentation
           echo -e "plugins:\n  - with-pdf:\n      output_path: ../report.pdf" >> mkdocs.yml
           mkdocs build
+          ls -lha
+          
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -59,7 +61,6 @@ jobs:
             logging.txt
             model.pkl
             report.pdf
-            ls -lha
 
       - name: Generate Tag
         id: tag
