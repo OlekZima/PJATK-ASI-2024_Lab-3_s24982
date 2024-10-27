@@ -107,3 +107,6 @@ This means that:
 
 Output:
 ![Pairplot](img/pairplot.png)
+
+!!! note
+    This plot is enormous, so to examine it just do a right-click and "Open image in new tab"
