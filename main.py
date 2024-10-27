@@ -21,14 +21,8 @@ def main(arguments):
     logging.basicConfig(
         level=logging.INFO,
         filename="logging.log",
-        format='%(asctime)s - %(levelname)s - %(message)s'
     )
     # Also print logs to console
-    console = logging.StreamHandler()
-    console.setLevel(logging.INFO)
-    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-    console.setFormatter(formatter)
-    logging.getLogger('').addHandler(console)
 
     logger = logging.getLogger(__name__)
 
