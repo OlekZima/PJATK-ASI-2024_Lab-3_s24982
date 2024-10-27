@@ -172,7 +172,7 @@ def main(arguments):
 
     # Create and evaluate the model
     logger.info("Creating and evaluating the Gradient Boosting Regressor model...")
-    model = create_model("gbr")
+    model = create_model("br")
     evaluate_model(model)
 
     # Plotting model

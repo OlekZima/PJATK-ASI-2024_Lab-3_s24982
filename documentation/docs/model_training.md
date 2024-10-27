@@ -55,12 +55,14 @@ _lots of logs_
 Given output show only two the best models. Full output table is much larger.
 
 The table shows us, that the best model for this dataset with described analysis and preprocessing is
-**Gradient Boosting Regressor**.
+**Bayesian Ridge**.
 Best results in all metrics.
 
-!!! warning "Warning"
-Sometimes the best model is not GBR. It can be BR. Hard to understand why it's happening, but GBR is still very good
-model to use.
+[//]: # (!!! warning "Warning")
+
+[//]: # (Sometimes the best model is not GBR. It can be BR. Hard to understand why it's happening, but GBR is still very good)
+
+[//]: # (model to use.)
 
 ## Model evaluation
 
