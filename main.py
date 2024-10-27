@@ -3,7 +3,6 @@ import pandas as pd
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import OneHotEncoder
 
 pd.set_option("display.max_columns", None)
 data_df = pd.read_csv("https://vincentarelbundock.github.io/Rdatasets/csv/AER/CollegeDistance.csv")
@@ -78,12 +77,13 @@ print(data_df.info())
 
 plt.figure(figsize=(10, 8))
 corr = data_df.corr()
-sns.heatmap(corr, annot=True, cmap="coolwarm")
+corr_rounded = corr.round(2)
+sns.heatmap(corr, annot=corr_rounded, cmap="coolwarm")
 plt.title("Correlation Heatmap")
-plt.show()
+plt.savefig("documentation/docs/img/Correlation_Heatmap.png")
 
-sns.pairplot(data_df[numerical_cols])
-plt.show()
+sns.pairplot(data_df)
+plt.savefig("documentation/docs/img/pairplot.png")
 
 for num_col in numerical_cols:
     for cat_col in categorical_cols:
