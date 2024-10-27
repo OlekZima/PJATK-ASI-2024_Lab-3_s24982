@@ -49,8 +49,8 @@ jobs:
           cd documentation
           echo -e "plugins:\n  - with-pdf:\n      output_path: ../report.pdf" >> mkdocs.yml
           mkdocs build
-          cd
           ls -lha
+          pwd
 
 
       - name: Upload artifacts
