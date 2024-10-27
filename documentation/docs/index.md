@@ -1,3 +1,8 @@
+---
+title: College Distance Exploration
+---
+
+
 # Welcome to College Distances dataset exploration
 
 The College Distances dataset experiment aims to predict students' academic scores based on various demographic,
