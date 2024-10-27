@@ -114,6 +114,9 @@ Validation Curve
 Features importance
 ![Features importance](img/Feature%20Importance%20(All).png)
 
+Prediction Error
+![Features importance](img/Prediction%20Error%20Plot.png)
+
 ## Afterwords
 
 Model is located `model.pkl` in the GH actions artifacts.

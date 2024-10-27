@@ -179,6 +179,8 @@ def main(arguments):
     plot_model(model, plot="residuals", save=True)
     plot_model(model, plot="vc", save=True)
     plot_model(model, plot="feature_all", save=True)
+    plot_model(model, plot="error", save=True)
+
     # Tuning model
     tuned_model = tune_model(model, n_iter=100, early_stopping=True, optimize="R2", choose_better=True)
     evaluate_model(tuned_model)
