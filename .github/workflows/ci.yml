@@ -47,7 +47,7 @@ jobs:
           apt-get update
           apt-get install -y libpango-1.0.0 libpangocairo-1.0.0
           cd documentation
-          echo -e "plugins:\n  - with-pdf:\n      output_path: ../report.pdf" >> mkdocs.yml
+          echo -e "plugins:\n  - with-pdf:\n      output_path: ../../report.pdf" >> mkdocs.yml
           mkdocs build
           ls -lha
           pwd
@@ -79,5 +79,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: /rmp/runner/work/PJATK-ASI-2024_Lab-3_s24982/PJATK-ASI-2024_Lab-3_s24982/report.pdf
+          files: report.pdf
           tag_name: ${{ env.tag_name }}
