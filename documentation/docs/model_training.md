@@ -115,7 +115,7 @@ Features importance
 ![Features importance](img/Feature%20Importance%20(All).png)
 
 Prediction Error
-![Features importance](img/Prediction%20Error.png)
+![Prediction Error](img/Prediction%20Error.png)
 
 ## Afterwords
 
