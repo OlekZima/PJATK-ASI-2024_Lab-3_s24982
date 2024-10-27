@@ -211,12 +211,23 @@ def main(arguments):
     test_rows_removed = original_test_rows - post_setup_test_rows
 
     logger.info(f"Number of rows in training data before setup: {original_train_rows}")
+    print(f"Number of rows in training data before setup: {original_train_rows}")
+
     logger.info(f"Number of rows in training data after setup: {post_setup_train_rows}")
+    print(f"Number of rows in training data after setup: {post_setup_train_rows}")
+
     logger.info(f"Number of rows removed from training data during setup: {train_rows_removed}")
+    print(f"Number of rows removed from training data during setup: {train_rows_removed}")
 
     logger.info(f"Number of rows in test data before setup: {original_test_rows}")
+    print(f"Number of rows in test data before setup: {original_test_rows}")
+
     logger.info(f"Number of rows in test data after setup: {post_setup_test_rows}")
+    print(f"Number of rows in test data after setup: {post_setup_test_rows}")
+
     logger.info(f"Number of rows removed from test data during setup: {test_rows_removed}")
+    print(f"Number of rows removed from test data during setup: {test_rows_removed}")
+
 
     # Compare models
     logger.info("Comparing models...")
@@ -228,18 +239,18 @@ def main(arguments):
     model = create_model("br")
     evaluate_model(model)
 
-    # Plotting model
-    if arguments.plots:
-        logger.info("Generating model plots...")
-        plot_model(model, plot="residuals", save=True)
-        plot_model(model, plot="vc", save=True)
-        plot_model(model, plot="feature_all", save=True)
-        plot_model(model, plot="error", save=True)
-
     # Tuning model
     logger.info("Tuning the model...")
     tuned_model = tune_model(model, n_iter=100, early_stopping=True, optimize="R2", choose_better=True)
     evaluate_model(tuned_model)
+
+    # Plotting model
+    if arguments.plots:
+        logger.info("Generating model plots...")
+        plot_model(tuned_model, plot="residuals", save=True)
+        plot_model(tuned_model, plot="vc", save=True)
+        plot_model(tuned_model, plot="feature_all", save=True)
+        plot_model(tuned_model, plot="error", save=True)
 
     # Make predictions
     logger.info("Making predictions on the test data...")

@@ -47,8 +47,10 @@ jobs:
       - name: Debug
         run: |
           cd documentation
+          uname -v
           echo -e "plugins:\n  - with-pdf:\n      output_path: ../../report.pdf" >> mkdocs.yml
           cat mkdocs.yml
+          dnf install pango
           mkdocs build
           ls -lha
 
