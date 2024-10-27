@@ -109,9 +109,13 @@ Residuals
 Validation Curve
 ![Validation Curve](img/Validation%20Curve.png)
 
+Features importance
+![Features importance](img/Feature%20Importance%20(All).png)
+
 
 ## Afterwords
 
 Model is saved and called `gbr_final_model.pkl` in the repo.
 
 All details and logs of the experiments can be found in the actions artifacts. Look for `logs.txt` (pycaret logs) and `logging.txt` (whole experiment logs).
+
