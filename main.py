@@ -3,6 +3,7 @@ import pandas as pd
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 pd.set_option("display.max_columns", None)
 data_df = pd.read_csv("https://vincentarelbundock.github.io/Rdatasets/csv/AER/CollegeDistance.csv")
@@ -89,3 +90,8 @@ msk = np.random.rand(len(data_df)) < 0.8
 train_df = data_df[msk]
 test_df = data_df[~msk]
 print(train_df.shape, test_df.shape)
+
+scaler = StandardScaler()
+scaler.fit_transform(data_df)
+
+print(data_df)

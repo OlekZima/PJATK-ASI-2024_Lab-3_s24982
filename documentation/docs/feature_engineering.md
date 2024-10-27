@@ -67,7 +67,8 @@ Categorical features was coded as:
 
 ## Correlation Heatmap
 
-After transforming categorical features into numerical it is possible to generate proper heatmap correlation between features.
+After transforming categorical features into numerical it is possible to generate proper heatmap correlation between
+features.
 
 !!! example "Correlation Heatmap generating"
 
@@ -86,13 +87,16 @@ Output:
 
 ![Correlation Heatmap plot](img/Correlation_Heatmap.png)
 
-On this heatmap, we see that the most correlation for the `score` target feature comes from `education`, `ethnicity_other`, and `is_fcollege`.
+On this heatmap, we see that the most correlation for the `score` target feature comes from `education`,
+`ethnicity_other`, and `is_fcollege`.
 
 This means that:
+
 * A higher amount of total education years implies the highest score, which makes sense.
 * If the ethnicity is `other` (not African-American or Hispanic), the score is higher.
 * If the `is_fcollege` is set to `True` (father finished college), the score will be higher.
-* Similarly, there is a correlation between `is_mcollege` (mother finished college), but it is lower than the previous one.
+* Similarly, there is a correlation between `is_mcollege` (mother finished college), but it is lower than the previous
+  one.
 
 ## Pairplot
 
@@ -108,9 +112,29 @@ Output:
 ![Pairplot](img/pairplot.png)
 
 !!! note
-    This plot is enormous, so to examine it just do a right-click and "Open image in new tab".
+This plot is enormous, so to examine it just do a right-click and "Open image in new tab".
 
 This plot just shows the correlation, but in slightly "other way". So the meaning is the same.
+
+## Scaling features
+
+Features needs to be scaled in order to achieve the best result from our model.
+As a scaler we'll use `StandardScaler` from sklearn.
+
+!!! example "Scaling data"
+
+    === "Python"
+        ```py
+        scaler = StandardScaler()
+        scaler.fit_transform(data_df)
+        ```
+
+Result (only first two rows) of the scaling:
+
+| gender_is_female | score     | is_fcollege | is_mcollege | is_home | is_urban | unemp | wage | distance | tuition | education | is_high_income | is_region_west | ethnicity_afam | ethnicity_hispanic | ethnicity_other |
+|------------------|-----------|-------------|-------------|---------|----------|-------|------|----------|---------|-----------|----------------|----------------|----------------|--------------------|-----------------|
+| False            | 39.150002 | True        | False       | True    | True     | 6.2   | 8.09 | 0.2      | 0.88915 | 12        | True           | False          | 0              | 0                  | 1               |           |
+| True             | 48.869999 | False       | False       | True    | True     | 6.2   | 8.09 | 0.2      | 0.88915 | 12        | False          | False          | 0              | 0                  | 1               |
 
 ## Train test split
 
@@ -127,6 +151,7 @@ Before training our model data should be split into train and test. We'll use pa
         ```
 
 Output:
+
 ```markdown
 (3814, 16) (925, 16)
 ```

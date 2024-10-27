@@ -17,7 +17,7 @@ tam zamieszczone wykresy, albo można użyć bardziej profesjonalnego oprogramow
   usunięcie). Analiza statystyczna zmiennych. Ocena: 5 punktów za pełną eksplorację danych, w tym wykresy i opisy
   zmiennych.
 
-- [ ] Inżynieria cech i przygotowanie danych (5 punktów)
+- [x] Inżynieria cech i przygotowanie danych (5 punktów)
 
   Przeprowadzenie odpowiedniej inżynierii cech (np. kategoryzacja, standaryzacja, normalizacja, tworzenie nowych
   zmiennych, jeśli konieczne). Podział danych na zbiór treningowy i testowy. Ocena: 5 punktów za poprawne przygotowanie
