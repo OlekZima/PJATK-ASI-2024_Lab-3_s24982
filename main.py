@@ -18,12 +18,28 @@ def main(arguments):
     os.makedirs(target_dir, exist_ok=True)
 
     # Configure logging
-    logging.basicConfig(level=logging.INFO, filename="logging.log", filemode="w")
+    logging.basicConfig(
+        level=logging.INFO,
+        filename="logging.log",
+        filemode="w",
+        format='%(asctime)s - %(levelname)s - %(message)s'
+    )
+    # Also print logs to console
+    console = logging.StreamHandler()
+    console.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    console.setFormatter(formatter)
+    logging.getLogger('').addHandler(console)
+
     logger = logging.getLogger(__name__)
 
     logger.info("Loading data...")
     pd.set_option("display.max_columns", None)
     data_df = pd.read_csv("https://vincentarelbundock.github.io/Rdatasets/csv/AER/CollegeDistance.csv")
+
+    # Record initial number of rows
+    initial_row_count = data_df.shape[0]
+    logger.info(f"Initial number of rows: {initial_row_count}")
 
     # Drop unnecessary columns
     data_df = data_df.drop(columns=["rownames"])
@@ -38,19 +54,33 @@ def main(arguments):
     logger.info(f"The dataset contains {data_df.shape[0]} rows and {data_df.shape[1]} columns.")
 
     numerical_cols = data_df.select_dtypes(include=["float64", "int64"]).columns
-    logger.info(f"Numerical columns: {numerical_cols}")
+    logger.info(f"Numerical columns: {list(numerical_cols)}")
 
     logger.info("Statistical summary of numerical columns:")
     logger.info(data_df[numerical_cols].describe())
 
     categorical_cols = data_df.select_dtypes(include=["object"]).columns
-    logger.info(f"Categorical columns: {categorical_cols}")
+    logger.info(f"Categorical columns: {list(categorical_cols)}")
     for col in categorical_cols:
         logger.info(f"Value counts for {col}:")
         logger.info(data_df[col].value_counts())
 
+    # Check for missing values
+    missing_values_count = data_df.isnull().sum().sum()
+    logger.info(f"Total missing values in data_df: {missing_values_count}")
+
+    if missing_values_count > 0:
+        # Drop rows with missing values
+        before_dropna_row_count = data_df.shape[0]
+        data_df = data_df.dropna()
+        after_dropna_row_count = data_df.shape[0]
+        rows_removed_due_to_missing = before_dropna_row_count - after_dropna_row_count
+        logger.info(f"Rows removed due to missing values: {rows_removed_due_to_missing}")
+    else:
+        logger.info("No missing values found.")
+
     # Generate plots if --plots argument is provided
-    if arguments:
+    if arguments.plots:
         logger.info("Generating plots...")
         # Histograms for numerical variables
         for col in numerical_cols:
@@ -59,7 +89,7 @@ def main(arguments):
             plt.title(f"Distribution of {col}")
             plt.xlabel(col)
             plt.ylabel("Frequency")
-            plt.savefig(f"documentation/docs/img/Distribution_of_{col}.png", bbox_inches="tight")
+            plt.savefig(f"{target_dir}/Distribution_of_{col}.png", bbox_inches="tight")
             plt.close()
             logger.debug(f"Saved histogram for {col}.")
 
@@ -69,7 +99,7 @@ def main(arguments):
             sns.boxplot(x=data_df[col])
             plt.title(f"Box Plot of {col}")
             plt.xlabel(col)
-            plt.savefig(f"documentation/docs/img/Boxplot_of_{col}.png", bbox_inches="tight")
+            plt.savefig(f"{target_dir}/Boxplot_of_{col}.png", bbox_inches="tight")
             plt.close()
             logger.debug(f"Saved box plot for {col}.")
 
@@ -80,12 +110,15 @@ def main(arguments):
             plt.title(f"Count Plot of {col}")
             plt.xlabel("Count")
             plt.ylabel(col)
-            plt.savefig(f"documentation/docs/img/Countplot_of_{col}.png", bbox_inches="tight")
+            plt.savefig(f"{target_dir}/Countplot_of_{col}.png", bbox_inches="tight")
             plt.close()
             logger.debug(f"Saved count plot for {col}.")
 
     # Data preprocessing
     logger.info("Preprocessing data...")
+    preprocessed_row_count = data_df.shape[0]
+
+    # Convert categorical variables to boolean
     data_df["gender"] = data_df["gender"].apply(lambda x: x == "female")
     data_df = data_df.rename(columns={"gender": "gender_is_female"})
 
@@ -111,33 +144,38 @@ def main(arguments):
     data_df = pd.get_dummies(data_df, columns=["ethnicity"], prefix=["ethnicity"], prefix_sep="_", dtype=int)
     logger.debug("Applied one-hot encoding to 'ethnicity' column.")
 
+    # Check for any row changes after preprocessing
+    post_preprocessing_row_count = data_df.shape[0]
+    rows_added = post_preprocessing_row_count - preprocessed_row_count
+    logger.info(f"Rows added during preprocessing: {rows_added}")
+
     logger.info("Data after preprocessing:")
     logger.info(data_df.head())
     logger.info(data_df.info())
 
-    # Generate correlation heatmap if --plots argument is provided
-    if arguments:
+    # Generate correlation heatmap and pairplot if --plots argument is provided
+    if arguments.plots:
         logger.info("Generating correlation heatmap and pairplot...")
         plt.figure(figsize=(10, 8))
         corr = data_df.corr()
         corr_rounded = corr.round(2)
         sns.heatmap(corr, annot=corr_rounded, cmap="coolwarm")
         plt.title("Correlation Heatmap")
-        plt.savefig("documentation/docs/img/Correlation_Heatmap.png")
+        plt.savefig(f"{target_dir}/Correlation_Heatmap.png")
         plt.close()
         logger.debug("Saved correlation heatmap.")
 
         # Pairplot
         sns.pairplot(data_df)
-        plt.savefig("documentation/docs/img/pairplot.png")
+        plt.savefig(f"{target_dir}/pairplot.png")
         plt.close()
         logger.debug("Saved pairplot.")
 
     # Split data into training and testing sets
     logger.info("Splitting data into training and testing sets...")
     msk = np.random.rand(len(data_df)) < 0.7
-    train_df = data_df[msk]
-    test_df = data_df[~msk]
+    train_df = data_df[msk].copy()
+    test_df = data_df[~msk].copy()
     logger.info(f"Training set shape: {train_df.shape}")
     logger.info(f"Testing set shape: {test_df.shape}")
 
@@ -152,8 +190,12 @@ def main(arguments):
     test_df[columns_to_scale] = scaler.transform(test_df[columns_to_scale])
     logger.debug("Applied StandardScaler to numerical features.")
 
-    logger.info("Data after scaling:")
+    logger.info("Data after scaling (first five rows of training data):")
     logger.info(train_df.head())
+
+    # Record number of rows before model setup
+    original_train_rows = train_df.shape[0]
+    original_test_rows = test_df.shape[0]
 
     # PyCaret setup
     logger.info("Setting up PyCaret regression environment...")
@@ -168,7 +210,29 @@ def main(arguments):
                 use_gpu=True,
                 normalize=True,
                 index=False,
-                verbose=False)
+                verbose=False,
+                silent=True)
+
+    # Get the data after setup
+    X_train = get_config('X_train')
+    y_train = get_config('y_train')
+    X_test = get_config('X_test')
+    y_test = get_config('y_test')
+
+    post_setup_train_rows = X_train.shape[0]
+    post_setup_test_rows = X_test.shape[0]
+
+    # Calculate rows removed during setup (e.g., outlier removal)
+    train_rows_removed = original_train_rows - post_setup_train_rows
+    test_rows_removed = original_test_rows - post_setup_test_rows
+
+    logger.info(f"Number of rows in training data before setup: {original_train_rows}")
+    logger.info(f"Number of rows in training data after setup: {post_setup_train_rows}")
+    logger.info(f"Number of rows removed from training data during setup: {train_rows_removed}")
+
+    logger.info(f"Number of rows in test data before setup: {original_test_rows}")
+    logger.info(f"Number of rows in test data after setup: {post_setup_test_rows}")
+    logger.info(f"Number of rows removed from test data during setup: {test_rows_removed}")
 
     # Compare models
     logger.info("Comparing models...")
@@ -176,17 +240,20 @@ def main(arguments):
     logger.info(f"Best model: {best_model}")
 
     # Create and evaluate the model
-    logger.info("Creating and evaluating the Gradient Boosting Regressor model...")
+    logger.info("Creating and evaluating the Bayesian Ridge Regression model...")
     model = create_model("br")
     evaluate_model(model)
 
     # Plotting model
-    plot_model(model, plot="residuals", save=True)
-    plot_model(model, plot="vc", save=True)
-    plot_model(model, plot="feature_all", save=True)
-    plot_model(model, plot="error", save=True)
+    if arguments.plots:
+        logger.info("Generating model plots...")
+        plot_model(model, plot="residuals", save=True)
+        plot_model(model, plot="vc", save=True)
+        plot_model(model, plot="feature_all", save=True)
+        plot_model(model, plot="error", save=True)
 
     # Tuning model
+    logger.info("Tuning the model...")
     tuned_model = tune_model(model, n_iter=100, early_stopping=True, optimize="R2", choose_better=True)
     evaluate_model(tuned_model)
 
@@ -200,9 +267,8 @@ def main(arguments):
     logger.info("Saving the final model...")
     save_model(tuned_model, "model")
 
-    logger.info("Moving .png files to the mkdocs directory...")
-
-
+    # Move plot images to target directory
+    logger.info("Moving .png files to the target directory...")
     for filename in os.listdir(source_dir):
         if filename.endswith(".png"):
             source_path = os.path.join(source_dir, filename)
@@ -211,12 +277,13 @@ def main(arguments):
             shutil.move(source_path, target_path)
             logger.info(f"Moved {filename} to {target_path}")
 
+    logger.info("Script execution completed.")
 
 
 def parse_args():
     parser = argparse.ArgumentParser(description='ML Model Training Script')
-    parser.add_argument('--plots', help='Generate and save plots')
-    return False if parser.parse_args() == 0 else True
+    parser.add_argument('--plots', action='store_true', help='Generate and save plots')
+    return parser.parse_args()
 
 
 if __name__ == "__main__":
