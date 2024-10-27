@@ -58,7 +58,7 @@ The table shows us, that the best model for this dataset with described analysis
 **Gradient Boosting Regressor**.
 Best results in all metrics.
 
-!!! alert "Warning"
+!!! warning "Warning"
     Sometimes the best model is not GBR. It can be BR. Hard to understand why it's happening, but GBR is still very good
     model to use.
 
@@ -96,7 +96,7 @@ Therefore, tuning is needed.
 
 !!! example "Tuning the model"
 
-    === "Python
+    === "Python"
         ```py
         tuned_model = tune_model(model, n_iter=50, early_stopping=True, optimize="R2", choose_better=True)
         ```
