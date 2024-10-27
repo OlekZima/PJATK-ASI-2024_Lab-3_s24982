@@ -45,7 +45,7 @@ jobs:
             logging.txt
             model.pkl
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy MkDocs to GitHub Pages
         uses: mhausenblas/mkdocs-deploy-gh-pages@master
         env:
           CONFIG_FILE: documentation/mkdocs.yml
@@ -53,4 +53,6 @@ jobs:
           Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.15/x64/bin/python
 
       - name: Debug
-        run: ls -lha
+        run: |
+          cd documentation/docs
+          mkdocs build
