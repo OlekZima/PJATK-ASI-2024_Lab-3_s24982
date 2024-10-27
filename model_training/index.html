@@ -1,0 +1,748 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../feature_engineering/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>Creating a model - College Distance Exploration</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bcfcd587.min.css">
+      
+      
+  
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 13h-2V7h2m0 10h-2v-2h2M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z"/></svg>');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#creating-a-model" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="College Distance Exploration" class="md-header__button md-logo" aria-label="College Distance Exploration" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            College Distance Exploration
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Creating a model
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="College Distance Exploration" class="md-nav__button md-logo" aria-label="College Distance Exploration" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    College Distance Exploration
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data_explore/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data Explore
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../feature_engineering/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feature Engineering
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Creating a model
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Creating a model
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Approach
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-a-pycaret" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting up a pycaret
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model evaluation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#however" class="md-nav__link">
+    <span class="md-ellipsis">
+      However...
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#afterwords" class="md-nav__link">
+    <span class="md-ellipsis">
+      Afterwords
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Approach
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-a-pycaret" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting up a pycaret
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model evaluation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#however" class="md-nav__link">
+    <span class="md-ellipsis">
+      However...
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#afterwords" class="md-nav__link">
+    <span class="md-ellipsis">
+      Afterwords
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="creating-a-model">Creating a model</h1>
+<h2 id="approach">Approach</h2>
+<p>As main approach to create a model <code>pycaret</code> library was chosen.
+The reason is pycaret provides structured and easy API to create, evaluate and tune model.</p>
+<h2 id="setting-up-a-pycaret">Setting up a <code>pycaret</code></h2>
+<div class="admonition example">
+<p class="admonition-title">pycaret setup</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Python</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</div>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>  <span class="n">reg</span> <span class="o">=</span> <span class="n">setup</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>              <span class="n">target</span><span class="o">=</span><span class="s2">&quot;score&quot;</span><span class="p">,</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>              <span class="n">test_data</span><span class="o">=</span><span class="n">test_df</span><span class="p">,</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>              <span class="n">remove_outliers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>              <span class="n">fold_strategy</span><span class="o">=</span><span class="s2">&quot;kfold&quot;</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>              <span class="n">fold</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>              <span class="n">session_id</span><span class="o">=</span><span class="mi">2137</span><span class="p">,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>              <span class="n">fold_shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>              <span class="n">use_gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>              <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>              <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>  <span class="n">best_model</span> <span class="o">=</span> <span class="n">compare_models</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<p>Description:</p>
+<ul>
+<li><code>data_df</code>: data.</li>
+<li><code>target</code>: target feature to predict.</li>
+<li><code>test_df</code>: because we split data on our own, we can pass our test data to pycaret.</li>
+<li><code>remove_outliers</code>: removes statistical outliers from the data.</li>
+<li><code>fold_strategy</code>: The method of folds.</li>
+<li><code>fold_shuffle</code>: Does folds needs to be shuffled.</li>
+<li><code>fold</code>: cross-validation for selected model.</li>
+<li><code>session_id</code>: allows to replicate experiment.</li>
+<li><code>normalize</code>: does normalization should be applied:</li>
+<li><code>use_gpu</code>: allows pycaret to use gpu to speed things up.</li>
+<li><code>index</code>: Indicates whether data has an index column.</li>
+</ul>
+<p>Output:</p>
+<p><em>lots of logs</em></p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>MAE</th>
+<th>MSE</th>
+<th>RMSE</th>
+<th>R2</th>
+<th>RMSLE</th>
+<th>MAPE</th>
+<th>TT (Sec)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gbr Gradient Boosting Regressor</td>
+<td>0.6551</td>
+<td>0.6549</td>
+<td>0.8085</td>
+<td>0.3407</td>
+<td>0.3708</td>
+<td>1.9342</td>
+<td>0.2800</td>
+</tr>
+<tr>
+<td>br Bayesian Ridge</td>
+<td>0.6616</td>
+<td>0.6578</td>
+<td>0.8103</td>
+<td>0.3378</td>
+<td>0.3807</td>
+<td>1.9395</td>
+<td>0.1133</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+</div>
+<p>Given output show only two the best models. Full output table is much larger.</p>
+<p>The table shows us, that the best model for this dataset with described analysis and preprocessing is
+<strong>Bayesian Ridge</strong>.
+Best results in all metrics.</p>
+<h2 id="model-evaluation">Model evaluation</h2>
+<table>
+<thead>
+<tr>
+<th>Fold</th>
+<th>MAE</th>
+<th>MSE</th>
+<th>RMSE</th>
+<th>R2</th>
+<th>RMSLE</th>
+<th>MAPE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.6477</td>
+<td>0.6644</td>
+<td>0.8151</td>
+<td>0.3104</td>
+<td>0.3651</td>
+<td>1.3917</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.6265</td>
+<td>0.6169</td>
+<td>0.7854</td>
+<td>0.4017</td>
+<td>0.3688</td>
+<td>1.5117</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.6315</td>
+<td>0.6061</td>
+<td>0.7785</td>
+<td>0.4055</td>
+<td>0.3722</td>
+<td>1.5609</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.6703</td>
+<td>0.6709</td>
+<td>0.8191</td>
+<td>0.3111</td>
+<td>0.3684</td>
+<td>2.0291</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.6599</td>
+<td>0.6467</td>
+<td>0.8041</td>
+<td>0.3387</td>
+<td>0.3938</td>
+<td>1.7867</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.6202</td>
+<td>0.6732</td>
+<td>0.8205</td>
+<td>0.3154</td>
+<td>0.3562</td>
+<td>1.5384</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0.6903</td>
+<td>0.6919</td>
+<td>0.8318</td>
+<td>0.2701</td>
+<td>0.3808</td>
+<td>1.7269</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0.6466</td>
+<td>0.6363</td>
+<td>0.7977</td>
+<td>0.3843</td>
+<td>0.3434</td>
+<td>1.6471</td>
+</tr>
+<tr>
+<td>8</td>
+<td>0.6668</td>
+<td>0.6636</td>
+<td>0.8146</td>
+<td>0.3884</td>
+<td>0.3865</td>
+<td>1.9079</td>
+</tr>
+<tr>
+<td>9</td>
+<td>0.6010</td>
+<td>0.5180</td>
+<td>0.7197</td>
+<td>0.4116</td>
+<td>0.3529</td>
+<td>3.1464</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0.6446</td>
+<td>0.6047</td>
+<td>0.7776</td>
+<td>0.3992</td>
+<td>0.3720</td>
+<td>3.4132</td>
+</tr>
+<tr>
+<td>11</td>
+<td>0.6676</td>
+<td>0.6908</td>
+<td>0.8311</td>
+<td>0.3463</td>
+<td>0.3898</td>
+<td>1.8291</td>
+</tr>
+<tr>
+<td>12</td>
+<td>0.6585</td>
+<td>0.6681</td>
+<td>0.8174</td>
+<td>0.2165</td>
+<td>0.3535</td>
+<td>1.3079</td>
+</tr>
+<tr>
+<td>13</td>
+<td>0.7243</td>
+<td>0.7756</td>
+<td>0.8807</td>
+<td>0.3356</td>
+<td>0.4085</td>
+<td>2.2211</td>
+</tr>
+<tr>
+<td>14</td>
+<td>0.6706</td>
+<td>0.6969</td>
+<td>0.8348</td>
+<td>0.2763</td>
+<td>0.3498</td>
+<td>1.9954</td>
+</tr>
+<tr>
+<td>Mean</td>
+<td>0.6551</td>
+<td>0.6549</td>
+<td>0.8085</td>
+<td>0.3407</td>
+<td>0.3708</td>
+<td>1.9342</td>
+</tr>
+<tr>
+<td>Std</td>
+<td>0.0290</td>
+<td>0.0550</td>
+<td>0.0344</td>
+<td>0.0563</td>
+<td>0.0178</td>
+<td>0.5815</td>
+</tr>
+</tbody>
+</table>
+<p>Model diagram</p>
+<p><img alt="Model Diagram" src="img/evaluation.png" /></p>
+<h2 id="however">However...</h2>
+<p>Our model is overfitted to the train dataset, which is huge problem, because usability of the model is <strong>zero</strong>.</p>
+<p>Therefore, tuning is needed.</p>
+<div class="admonition example">
+<p class="admonition-title">Tuning the model</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Python</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-py highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">tuned_model</span> <span class="o">=</span> <span class="n">tune_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">early_stopping</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">optimize</span><span class="o">=</span><span class="s2">&quot;R2&quot;</span><span class="p">,</span> <span class="n">choose_better</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>And after tuning we can visualise our data performance.</p>
+<p>Residuals
+<img alt="Residuals" src="../img/Residuals.png" /></p>
+<p>Validation Curve
+<img alt="Validation Curve" src="../img/Validation%20Curve.png" /></p>
+<p>Features importance
+<img alt="Features importance" src="../img/Feature%20Importance%20%28All%29.png" /></p>
+<p>Prediction Error
+<img alt="Prediction Error" src="../img/Prediction%20Error.png" /></p>
+<h2 id="afterwords">Afterwords</h2>
+<p>Model is located <code>model.pkl</code> in the GH actions artifacts.</p>
+<p>All details and logs of the experiments can be found in the actions artifacts. Look for <code>logs.txt</code> (pycaret logs) and
+<code>logging.txt</code> (whole experiment logs).</p>
+<p>As we can see in the Feature Importance plot, the <code>education</code> has the bigger impact on the end score for the students.</p>
+<p>Moral? Study hard and tests will be passed! 🙂</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+        <script src="../search/main.js"></script>
+      
+    
+  </body>
+</html>
