@@ -30,19 +30,6 @@ jobs:
       - name: Install requirements
         run: |
           pip install -r dependencies.txt
-          which python
-          python --version
-
-      - name: Debug
-        run: |
-          apt-get update
-          apt-get install -y libpango-1.0.0 libpangocairo-1.0.0
-          cd documentation
-          echo -e "plugins:\n  - with-pdf:\n      output_path: ../report.pdf" >> mkdocs.yml
-          cat mkdocs.yml
-          mkdocs build
-          ls -lha
-
 
       - name: Run python script
         run: python main.py --plots
@@ -55,7 +42,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.15/x64/bin/python
 
-
+      - name: Generate PDF report
+        run: |
+          apt-get update
+          apt-get install -y libpango-1.0.0 libpangocairo-1.0.0
+          cd documentation
+          echo -e "plugins:\n  - with-pdf:\n      output_path: ../report.pdf" >> mkdocs.yml
+          mkdocs build
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -65,3 +58,4 @@ jobs:
             logs.txt
             logging.txt
             model.pkl
+            report.pdf
