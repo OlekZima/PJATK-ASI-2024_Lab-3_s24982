@@ -36,14 +36,6 @@ jobs:
       - name: Run python script
         run: python main.py --plots
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: artifacts
-          path: |
-            logs.txt
-            logging.txt
-            model.pkl
 
       - name: Deploy MkDocs to GitHub Pages
         uses: mhausenblas/mkdocs-deploy-gh-pages@master
@@ -58,3 +50,12 @@ jobs:
           echo -e "plugins:\n  - with-pdf:\n      output_path: report.pdf" >> mkdocs.yml
           mkdocs build
           ls -lha
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts
+          path: |
+            logs.txt
+            logging.txt
+            model.pkl

@@ -21,7 +21,6 @@ def main(arguments):
     logging.basicConfig(
         level=logging.INFO,
         filename="logging.log",
-        filemode="w",
         format='%(asctime)s - %(levelname)s - %(message)s'
     )
     # Also print logs to console
@@ -90,7 +89,6 @@ def main(arguments):
             plt.xlabel(col)
             plt.ylabel("Frequency")
             plt.savefig(f"{target_dir}/Distribution_of_{col}.png", bbox_inches="tight")
-            plt.close()
 
         # Box plots for numerical variables
         for col in numerical_cols:
@@ -99,7 +97,6 @@ def main(arguments):
             plt.title(f"Box Plot of {col}")
             plt.xlabel(col)
             plt.savefig(f"{target_dir}/Boxplot_of_{col}.png", bbox_inches="tight")
-            plt.close()
 
         # Count plots for categorical variables
         for col in categorical_cols:
@@ -109,7 +106,6 @@ def main(arguments):
             plt.xlabel("Count")
             plt.ylabel(col)
             plt.savefig(f"{target_dir}/Countplot_of_{col}.png", bbox_inches="tight")
-            plt.close()
 
     # Data preprocessing
     logger.info("Preprocessing data...")
@@ -159,13 +155,11 @@ def main(arguments):
         sns.heatmap(corr, annot=corr_rounded, cmap="coolwarm")
         plt.title("Correlation Heatmap")
         plt.savefig(f"{target_dir}/Correlation_Heatmap.png")
-        plt.close()
         logger.debug("Saved correlation heatmap.")
 
         # Pairplot
         sns.pairplot(data_df)
         plt.savefig(f"{target_dir}/pairplot.png")
-        plt.close()
         logger.debug("Saved pairplot.")
 
     # Split data into training and testing sets
