@@ -207,8 +207,7 @@ def main(arguments):
                 use_gpu=True,
                 normalize=True,
                 index=False,
-                verbose=False,
-                silent=True)
+                verbose=False)
 
     # Get the data after setup
     X_train = get_config('X_train')
