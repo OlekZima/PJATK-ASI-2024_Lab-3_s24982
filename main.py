@@ -91,7 +91,10 @@ train_df = data_df[msk]
 test_df = data_df[~msk]
 print(train_df.shape, test_df.shape)
 
+data_df["education"] = data_df["education"].astype(float)
+columns_to_scale = data_df.select_dtypes(include=["float64"]).columns
 scaler = StandardScaler()
-scaler.fit_transform(data_df)
+data_df[columns_to_scale] = scaler.fit_transform(data_df[columns_to_scale])
 
-print(data_df)
+print("Scaled!")
+print(data_df.head())

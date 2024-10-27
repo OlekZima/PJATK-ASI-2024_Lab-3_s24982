@@ -125,16 +125,21 @@ As a scaler we'll use `StandardScaler` from sklearn.
 
     === "Python"
         ```py
+        data_df["education"] = data_df["education"].astype(float)
+        columns_to_scale = data_df.select_dtypes(include=["float64"]).columns
         scaler = StandardScaler()
-        scaler.fit_transform(data_df)
+        data_df[columns_to_scale] = scaler.fit_transform(data_df[columns_to_scale])
+        
+        print(data_df.head())
         ```
 
+`education` type was changed to float, so one hot encoded features will stay the same as before.
 Result (only first two rows) of the scaling:
 
-| gender_is_female | score     | is_fcollege | is_mcollege | is_home | is_urban | unemp | wage | distance | tuition | education | is_high_income | is_region_west | ethnicity_afam | ethnicity_hispanic | ethnicity_other |
-|------------------|-----------|-------------|-------------|---------|----------|-------|------|----------|---------|-----------|----------------|----------------|----------------|--------------------|-----------------|
-| False            | 39.150002 | True        | False       | True    | True     | 6.2   | 8.09 | 0.2      | 0.88915 | 12        | True           | False          | 0              | 0                  | 1               |           |
-| True             | 48.869999 | False       | False       | True    | True     | 6.2   | 8.09 | 0.2      | 0.88915 | 12        | False          | False          | 0              | 0                  | 1               |
+| gender_is_female | score     | is_fcollege | is_mcollege | is_home | is_urban | unemp     | wage      | distance  | tuition  | education | is_high_income | is_region_west | ethnicity_afam | ethnicity_hispanic | ethnicity_other |
+|------------------|-----------|-------------|-------------|---------|----------|-----------|-----------|-----------|----------|-----------|----------------|----------------|----------------|--------------------|-----------------|
+| False            | -1.349160 | True        | False       | True    | True     | -0.505635 | -1.050324 | -0.697845 | 0.219584 | -1.010536 | True           | False          | 0              | 0                  | 1               |
+| True             | -0.232046 | False       | False       | True    | True     | -0.505635 | -1.050324 | -0.697845 | 0.219584 | -1.010536 | False          | False          | 0              | 0                  | 1               |
 
 ## Train test split
 
