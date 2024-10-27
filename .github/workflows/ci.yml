@@ -79,5 +79,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: "report.pdf"
+          files: rmp/runner/work/PJATK-ASI-2024_Lab-3_s24982/PJATK-ASI-2024_Lab-3_s24982/report.pdf
           tag_name: ${{ env.tag_name }}
