@@ -7,6 +7,7 @@ CollegeDistance.csv
 envoirment.yml
 docker-compose-selfhosted-runner.yml
 *.png
+*.pkl
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
