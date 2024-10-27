@@ -7,3 +7,4 @@ protobuf==5.28.3
 pydantic==2.9.2
 mkdocs
 mkdocs-with-pdf
+pymdown-extensions
