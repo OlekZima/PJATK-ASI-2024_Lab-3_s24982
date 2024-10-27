@@ -32,6 +32,7 @@ jobs:
           pip install -r dependencies.txt
           which python
           python --version
+          ls -lha
 
       - name: Run python script
         run: python main.py
