@@ -50,7 +50,7 @@ jobs:
           echo -e "plugins:\n  - with-pdf:\n      output_path: ../report.pdf" >> mkdocs.yml
           mkdocs build
           ls -lha
-          
+
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -62,25 +62,15 @@ jobs:
             model.pkl
             report.pdf
 
-      - name: Generate Tag
-        id: tag
-        run: echo "tag_release=v$(date +'%Y.%m.%d')" >> $GITHUB_ENV
-
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ env.tag_release }}
-          release_name: "Release of the PDF report ${{ env.tag_release }}"
+          name: "Release of the PDF report"
 
       - name: Upload Report to Release
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: report.pdf
-          asset_name: report.pdf
-          asset_content_type: application/pdf
+          files: report.pdf
