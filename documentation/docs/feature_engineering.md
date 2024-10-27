@@ -71,7 +71,7 @@ After transforming categorical features into numerical it is possible to generat
 
 !!! example Correlation Heatmap generating
 
-    === Python
+    === "Python"
 
         ```py
         plt.figure(figsize=(10, 8))
@@ -87,6 +87,7 @@ Output:
 ![Correlation Heatmap plot](img/Correlation_Heatmap.png)
 
 On this heatmap, we see that the most correlation for the `score` target feature comes from `education`, `ethnicity_other`, and `is_fcollege`.
+
 This means that:
 * A higher amount of total education years implies the highest score, which makes sense.
 * If the ethnicity is `other` (not African-American or Hispanic), the score is higher.
@@ -97,7 +98,7 @@ This means that:
 
 !!! example Pairplot generating
 
-    === Python
+    === "Python"
 
         ```py
         sns.pairplot(data_df)
