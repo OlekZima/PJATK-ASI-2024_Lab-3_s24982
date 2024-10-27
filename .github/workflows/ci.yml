@@ -47,7 +47,7 @@ jobs:
           apt-get update
           apt-get install -y libpango-1.0.0 libpangocairo-1.0.0
           cd documentation
-          echo -e "plugins:\n  - with-pdf:\n      output_path: ../../report.pdf" >> mkdocs.yml
+          echo -e "plugins:\n  - with-pdf:\n      output_path: ../../report.pdf\n      author: "Oleksandr Zimenko"" >> mkdocs.yml
           mkdocs build
           ls -lha
           pwd
