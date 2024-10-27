@@ -5,3 +5,4 @@ numpy==1.26.4
 matplotlib==3.7.5
 protobuf==5.28.3
 pydantic==2.9.2
+mkdocs-with-pdf
