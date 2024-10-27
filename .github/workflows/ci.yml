@@ -62,11 +62,16 @@ jobs:
             model.pkl
             report.pdf
 
+      - name: Generate Tag
+        id: tag
+        run: echo "tag_name=v$(date +'%Y.%m.%d.%h.%m')" >> $GITHUB_ENV
+
       - name: Create Release
         id: create_release
         uses: ncipollo/release-action@v1
         with:
           name: "Release of the PDF report"
+          tag: ${{ env.tag_name }}
 
       - name: Upload Report to Release
         uses: softprops/action-gh-release@v2
