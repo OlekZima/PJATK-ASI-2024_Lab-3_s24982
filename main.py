@@ -191,7 +191,7 @@ def main(arguments):
 
     # Save the final model
     logger.info("Saving the final model...")
-    save_model(tuned_model, "gbr_final_model")
+    save_model(tuned_model, "model")
 
     logger.info("Moving .png files to the mkdocs directory...")
     target_dir = "documentation/docs/img"

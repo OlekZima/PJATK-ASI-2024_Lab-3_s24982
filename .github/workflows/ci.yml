@@ -32,7 +32,18 @@ jobs:
           pip install -r dependencies.txt
           which python
           python --version
-            
+
+      - name: Run python script
+        run: python main.py
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts
+          path: |
+            logs.txt
+            logging.txt
+            model.pkl
 
       - name: Deploy to GitHub Pages
         uses: mhausenblas/mkdocs-deploy-gh-pages@master

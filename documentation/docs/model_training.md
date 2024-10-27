@@ -114,7 +114,7 @@ Features importance
 
 ## Afterwords
 
-Model is saved and called `gbr_final_model.pkl` in the repo.
+Model is located `model.pkl` in the GH actions artifacts.
 
 All details and logs of the experiments can be found in the actions artifacts. Look for `logs.txt` (pycaret logs) and
 `logging.txt` (whole experiment logs).

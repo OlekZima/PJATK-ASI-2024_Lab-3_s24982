@@ -10,6 +10,10 @@ nav:
   - Feature Engineering: feature_engineering.md
   - Creating a model: model_training.md
 
+plugins:
+  - search
+  - print-site
+
 markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
