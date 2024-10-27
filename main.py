@@ -91,7 +91,6 @@ def main(arguments):
             plt.ylabel("Frequency")
             plt.savefig(f"{target_dir}/Distribution_of_{col}.png", bbox_inches="tight")
             plt.close()
-            logger.debug(f"Saved histogram for {col}.")
 
         # Box plots for numerical variables
         for col in numerical_cols:
@@ -101,7 +100,6 @@ def main(arguments):
             plt.xlabel(col)
             plt.savefig(f"{target_dir}/Boxplot_of_{col}.png", bbox_inches="tight")
             plt.close()
-            logger.debug(f"Saved box plot for {col}.")
 
         # Count plots for categorical variables
         for col in categorical_cols:
@@ -112,7 +110,6 @@ def main(arguments):
             plt.ylabel(col)
             plt.savefig(f"{target_dir}/Countplot_of_{col}.png", bbox_inches="tight")
             plt.close()
-            logger.debug(f"Saved count plot for {col}.")
 
     # Data preprocessing
     logger.info("Preprocessing data...")
