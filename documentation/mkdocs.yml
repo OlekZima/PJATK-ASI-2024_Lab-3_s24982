@@ -10,10 +10,6 @@ nav:
   - Feature Engineering: feature_engineering.md
   - Creating a model: model_training.md
 
-plugins:
-  - with-pdf:
-      output_path: report.pdf
-
 markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
