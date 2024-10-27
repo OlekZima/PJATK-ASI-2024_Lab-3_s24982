@@ -104,10 +104,10 @@ Therefore, tuning is needed.
 And after tuning we can visualise our data performance.
 
 Residuals
-![Residuals](../../Residuals.png)
+![Residuals](img/Residuals.png)
 
 Validation Curve
-![Validation Curve](../../Validation%20Curve.png)
+![Validation Curve](img/Validation%20Curve.png)
 
 
 ## Afterwords

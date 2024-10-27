@@ -1,5 +1,8 @@
 import argparse
 import logging
+import os
+import shutil
+
 import pandas as pd
 import seaborn as sns
 import numpy as np
@@ -189,6 +192,19 @@ def main(arguments):
     # Save the final model
     logger.info("Saving the final model...")
     save_model(tuned_model, "gbr_final_model")
+
+    logger.info("Moving .png files to the mkdocs directory...")
+    target_dir = "documentation/docs/img"
+    source_dir = "./"
+
+    for filename in os.listdir(source_dir):
+        if filename.endswith(".png"):
+            source_path = os.path.join(source_dir, filename)
+            target_path = os.path.join(target_dir, filename)
+
+            shutil.move(source_path, target_path)
+            logger.info(f"Moved {filename} to {target_path}")
+
 
 
 def parse_args():
