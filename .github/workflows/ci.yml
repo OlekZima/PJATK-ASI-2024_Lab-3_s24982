@@ -79,5 +79,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: "report.pdf
+          files: "report.pdf"
           tag_name: ${{ env.tag_name }}
