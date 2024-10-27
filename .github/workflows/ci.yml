@@ -32,11 +32,30 @@ jobs:
           pip install -r dependencies.txt
           which python
           python --version
-            
 
-      - name: Deploy to GitHub Pages
+      - name: Run python script
+        run: python main.py --plots
+
+
+      - name: Deploy MkDocs to GitHub Pages
         uses: mhausenblas/mkdocs-deploy-gh-pages@master
         env:
           CONFIG_FILE: documentation/mkdocs.yml
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.15/x64/bin/python
+
+      - name: Debug
+        run: |
+          cd documentation/docs
+          echo -e "plugins:\n  - with-pdf:\n      output_path: report.pdf" >> mkdocs.yml
+          mkdocs build
+          ls -lha
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts
+          path: |
+            logs.txt
+            logging.txt
+            model.pkl
