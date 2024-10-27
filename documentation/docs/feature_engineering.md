@@ -69,7 +69,7 @@ Categorical features was coded as:
 
 After transforming categorical features into numerical it is possible to generate proper heatmap correlation between features.
 
-!!! example Correlation Heatmap generating
+!!! example "Correlation Heatmap generating"
 
     === "Python"
 
@@ -96,10 +96,9 @@ This means that:
 
 ## Pairplot
 
-!!! example Pairplot generating
+!!! example "Pairplot generating"
 
     === "Python"
-
         ```py
         sns.pairplot(data_df)
         plt.show()
@@ -109,4 +108,25 @@ Output:
 ![Pairplot](img/pairplot.png)
 
 !!! note
-    This plot is enormous, so to examine it just do a right-click and "Open image in new tab"
+    This plot is enormous, so to examine it just do a right-click and "Open image in new tab".
+
+This plot just shows the correlation, but in slightly "other way". So the meaning is the same.
+
+## Train test split
+
+Before training our model data should be split into train and test. We'll use pandas masks for that.
+
+!!! example "Train test split"
+
+    === "Python"
+        ```py
+        msk = np.random.rand(len(data_df)) < 0.8
+        train_df = data_df[msk]
+        test_df = data_df[~msk]
+        print(train_df.shape, test_df.shape)
+        ```
+
+Output:
+```markdown
+(3814, 16) (925, 16)
+```

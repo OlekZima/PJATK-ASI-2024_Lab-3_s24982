@@ -85,16 +85,7 @@ plt.savefig("documentation/docs/img/Correlation_Heatmap.png")
 sns.pairplot(data_df)
 plt.savefig("documentation/docs/img/pairplot.png")
 
-for num_col in numerical_cols:
-    for cat_col in categorical_cols:
-        plt.figure(figsize=(8, 6))
-        sns.boxplot(x=cat_col, y=num_col, data=data_df)
-        plt.title(f"{num_col} by {cat_col}")
-        plt.show()
-
-for num_col in numerical_cols:
-    plt.figure(figsize=(8, 6))
-    data_df.groupby("gender")[num_col].mean().plot(kind="bar")
-    plt.title(f"Average {num_col} by Gender")
-    plt.ylabel(f"Average {num_col}")
-    plt.show()
+msk = np.random.rand(len(data_df)) < 0.8
+train_df = data_df[msk]
+test_df = data_df[~msk]
+print(train_df.shape, test_df.shape)
