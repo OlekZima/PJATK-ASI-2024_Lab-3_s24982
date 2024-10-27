@@ -12,6 +12,11 @@ from pycaret.regression import *
 
 
 def main(arguments):
+    target_dir = "documentation/docs/img"
+    source_dir = "./"
+
+    os.makedirs(target_dir, exist_ok=True)
+
     # Configure logging
     logging.basicConfig(level=logging.INFO, filename="logging.log", filemode="w")
     logger = logging.getLogger(__name__)
@@ -196,8 +201,7 @@ def main(arguments):
     save_model(tuned_model, "model")
 
     logger.info("Moving .png files to the mkdocs directory...")
-    target_dir = "documentation/docs/img"
-    source_dir = "./"
+
 
     for filename in os.listdir(source_dir):
         if filename.endswith(".png"):
