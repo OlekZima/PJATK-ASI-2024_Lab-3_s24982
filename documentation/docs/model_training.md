@@ -59,8 +59,8 @@ The table shows us, that the best model for this dataset with described analysis
 Best results in all metrics.
 
 !!! warning "Warning"
-    Sometimes the best model is not GBR. It can be BR. Hard to understand why it's happening, but GBR is still very good
-    model to use.
+Sometimes the best model is not GBR. It can be BR. Hard to understand why it's happening, but GBR is still very good
+model to use.
 
 ## Model evaluation
 
@@ -112,10 +112,13 @@ Validation Curve
 Features importance
 ![Features importance](img/Feature%20Importance%20(All).png)
 
-
 ## Afterwords
 
 Model is saved and called `gbr_final_model.pkl` in the repo.
 
-All details and logs of the experiments can be found in the actions artifacts. Look for `logs.txt` (pycaret logs) and `logging.txt` (whole experiment logs).
+All details and logs of the experiments can be found in the actions artifacts. Look for `logs.txt` (pycaret logs) and
+`logging.txt` (whole experiment logs).
 
+As we can see in the Feature Importance plot, the `education` has the bigger impact on the end score for the students.
+
+Moral? Study hard and tests will be passed! 🙂
