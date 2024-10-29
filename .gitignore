@@ -9,6 +9,8 @@ docker-compose-selfhosted-runner.yml
 *.png
 *.pkl
 
+# Lab-4
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

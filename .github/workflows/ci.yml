@@ -6,16 +6,11 @@ on:
   push:
     branches:
       - main
-      - feat/*
   workflow_dispatch:
 
 jobs:
-  Lab-03:
+  Lab-4:
     runs-on: self-hosted
-
-    permissions:
-      contents: write
-
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v4
@@ -26,58 +21,3 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-
-      - name: Install requirements
-        run: |
-          pip install -r dependencies.txt
-
-      - name: Run python script
-        run: python main.py --plots
-
-
-      - name: Deploy MkDocs to GitHub Pages
-        uses: mhausenblas/mkdocs-deploy-gh-pages@master
-        env:
-          CONFIG_FILE: documentation/mkdocs.yml
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.15/x64/bin/python
-
-      - name: Generate PDF report
-        run: |
-          apt-get update
-          apt-get install -y libpango-1.0.0 libpangocairo-1.0.0
-          cd documentation
-          echo -e "plugins:\n  - with-pdf:\n      output_path: ../../report.pdf\n      author: "Oleksandr Zimenko"" >> mkdocs.yml
-          mkdocs build
-          ls -lha
-          pwd
-
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: artifacts
-          path: |
-            logs.txt
-            logging.txt
-            model.pkl
-            report.pdf
-
-      - name: Generate Tag
-        id: tag
-        run: echo "tag_name=v$(date +'%Y.%m.%d.%H.%M')" >> $GITHUB_ENV
-
-      - name: Create Release
-        id: create_release
-        uses: ncipollo/release-action@v1
-        with:
-          name: "Release of the PDF report"
-          tag: ${{ env.tag_name }}
-
-      - name: Upload Report to Release
-        uses: softprops/action-gh-release@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          files: report.pdf
-          tag_name: ${{ env.tag_name }}
