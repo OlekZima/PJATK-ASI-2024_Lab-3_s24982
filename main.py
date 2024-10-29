@@ -39,5 +39,5 @@ if file is not None:
         predictor: ScorePredictor = ScorePredictor()
         predictions: pd.DataFrame = predictor.make_predictions(data_df)
 
-        st.write("Predicted score is:",
+        st.write("Predicted score is each row respectively:",
                  predictions["prediction_label"])
